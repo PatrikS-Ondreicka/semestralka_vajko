@@ -16,11 +16,16 @@
     padding: 1em;
     border-radius:5px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    background-color: #fff;
+    background-color: #C0C4C7;
+}
+
+label
+{
+    color: #2D7084;
 }
 
 .form-control
 {
-    background-color: lightgreen;
+    background-color:#869398;
 }
 

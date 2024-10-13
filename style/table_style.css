@@ -1,6 +1,21 @@
+.data_grid
+{
+}
+
 .data_block
 {
-    border: 1px solid black;
     border-radius: 5px;
-    display:inline-block;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    margin-bottom: 4px;
+    background-color: #C0C4C7;
+}
+
+.value_block_key
+{
+    color: #2D7084;
+}
+
+.value_block_value
+{
+    color: #8E8FA6;
 }

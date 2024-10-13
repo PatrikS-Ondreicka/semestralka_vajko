@@ -1,7 +1,19 @@
 body
 {
-    background-color: grey;
+    background-color: #909191;
+    color: #E6ECF0;
 }
+
+.nav-link
+{
+    color:#2D7084;
+}
+
+.nav-link:hover
+{
+    color: #8E8FA6;
+}
+
 
 .site_wrapper
 {
@@ -12,8 +24,10 @@ body
     max-width: 500px;
     padding-left: 20px;
     height: auto;
+    /*Tento pekny tien mam z tadeto: https://getcssscan.com/css-box-shadow-examples*/
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    background-color: #ffffff;
+    background-color: #C0C4C7;
+    border-radius: 5px;
 }
 
 /*For testing only*/
@@ -21,3 +35,16 @@ div
 {
 
 }
+
+/*
+Color scheme:
+    Primary #8AC9DF
+    Primary-dark #2D7084
+    Secondary #869398
+    Tertiary #8E8FA6
+    Error #FF5449
+    Neutral #909191
+    Neutral 2 #C0C4C7
+    Light-text #E6ECF0
+    Links -
+ */
