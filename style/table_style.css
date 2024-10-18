@@ -7,15 +7,89 @@
     border-radius: 5px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     margin-bottom: 4px;
-    background-color: #C0C4C7;
+    background-color:var(--neutral_2);
+    padding: 0.5em;
 }
 
-.value_block_key
+.data_block_header
 {
-    color: #2D7084;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.user_values
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.value_block, .user_data_block
+{
+    padding: 0.5em;
+}
+
+.value_block
+{
+    border-right:1px solid var(--neutral);
 }
 
 .value_block_value
 {
-    color: #8E8FA6;
+    color: var(--neutral);
 }
+
+.date_data
+{
+    color: var(--primary);
+}
+
+.time_data
+{
+    color: var(--neutral_2);
+}
+
+
+/*Icons classes*/
+.date_icon_bg
+{
+    background-image: url("../images/calendar-fill.svg");
+}
+
+.time_icon_bg
+{
+    background-image: url("../images/clock-fill.svg");
+}
+
+.temp_icon_bg
+{
+    background-image: url("../images/thermometer-half.svg");
+}
+
+.hum_icon_bg
+{
+    background-image: url("../images/droplet-fill.svg");
+}
+
+.user_icon_bg
+{
+    background-image: url("../images/person-fill.svg");
+}
+
+.wind_icon_bg
+{
+    background-image: url("../images/wind.svg");
+}
+
+.wind_arr_icon_bg
+{
+    background-image: url("../images/arrow-down-left.svg");
+}
+
+.precip_icon_bg
+{
+    background-image: url("../images/cloud-drizzle-fill.svg");
+}
+
+
+

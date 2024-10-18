@@ -12,7 +12,7 @@
     <div class="row">
         <!-- Menu sidebar --->
         <h1>Weather site</h1>
-        <div class="menu_sidebar col-sm-12 col-md-2">
+        <div class="menu_sidebar container col-12 col-lg-2 mb-1 mb-lg-0">
             <nav class="site_menu navbar">
                 <ul class="navbar-nav">
                     <li class="nav_item">
@@ -24,21 +24,24 @@
                     <li class="nav_item">
                         <a class="nav-link" href="../sites/data_table_prot.html">Table prototype</a>
                     </li>
+                    <li class="nav_item">
+                        <a class="nav-link" href="../sites/data_form_prot.html">Add data form prototype</a>
+                    </li>
                 </ul>
             </nav>
         </div>
 
         <!-- Website content -->
-        <div class="site_content col-sm-12 col-md-8">
+        <div class="site_content col-12 col-lg-8">
             <form>
                 <div class="container login_container col-lg-6 col-sm-12">
                     <div class="form-group">
                         <label for="login_text_form">User Login</label>
-                        <input class="form-control" type="text" id="login_text_form" name="login_text_form">
+                        <input class="form-control" type="text" id="login_text_form" name="login_text_form" required>
                     </div>
                     <div class="form-group">
                         <label for="login_pass_form">User Password</label>
-                        <input class="form-control" type="password" id="login_pass_form" name="login_pass_form">
+                        <input class="form-control" type="password" id="login_pass_form" name="login_pass_form" required>
                     </div>
                     <div class="form-group col-lg-4 col-sm-12">
                         <input class="form-control" type="submit" value="Login">
@@ -47,7 +50,7 @@
             </form>
         </div>
         <!-- Right sidebar -->
-        <div class="right_sidebar col-sm-12 col-md-2">
+        <div class="right_sidebar col-12 col-lg-2">
             <p>Right</p>
         </div>
     </div>

@@ -1,19 +1,29 @@
+:root
+{
+    --primary: #2D7084;
+    --secondary: #869398;
+    --tertiary: #8E8FA6;
+    --error: #FF5449;
+    --neutral: #909191;
+    --neutral_2: #C0C4C7;
+    --light_text: #E6ECF0;
+}
+
 body
 {
-    background-color: #909191;
+    background-color:var(--neutral);
     color: #E6ECF0;
 }
 
 .nav-link
 {
-    color:#2D7084;
+    color:var(--primary);
 }
 
 .nav-link:hover
 {
-    color: #8E8FA6;
+    color:var(--tertiary);
 }
-
 
 .site_wrapper
 {
@@ -23,11 +33,58 @@ body
 {
     max-width: 500px;
     padding-left: 20px;
-    height: auto;
     /*Tento pekny tien mam z tadeto: https://getcssscan.com/css-box-shadow-examples*/
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    background-color: #C0C4C7;
+    background-color:var(--neutral_2);
     border-radius: 5px;
+    height: 200px;
+}
+
+.date_icon_bg
+{
+    background-image: url("../images/calendar-fill.svg");
+}
+
+.time_icon_bg
+{
+    background-image: url("../images/clock-fill.svg");
+}
+
+.temp_icon_bg
+{
+    background-image: url("../images/thermometer-half.svg");
+}
+
+.hum_icon_bg
+{
+    background-image: url("../images/droplet-fill.svg");
+}
+
+.user_icon_bg
+{
+    background-image: url("../images/person-fill.svg");
+}
+
+.wind_icon_bg
+{
+    background-image: url("../images/wind.svg");
+}
+
+.wind_arr_icon_bg
+{
+    background-image: url("../images/arrow-down-left.svg");
+}
+
+.precip_icon_bg
+{
+    background-image: url("../images/cloud-drizzle-fill.svg");
+}
+
+.value_icon
+{
+    width: 1em;
+    height: 1em;
+    color: var(--primary);
 }
 
 /*For testing only*/
@@ -35,16 +92,3 @@ div
 {
 
 }
-
-/*
-Color scheme:
-    Primary #8AC9DF
-    Primary-dark #2D7084
-    Secondary #869398
-    Tertiary #8E8FA6
-    Error #FF5449
-    Neutral #909191
-    Neutral 2 #C0C4C7
-    Light-text #E6ECF0
-    Links -
- */
