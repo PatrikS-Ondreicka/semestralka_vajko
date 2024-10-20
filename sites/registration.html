@@ -10,7 +10,7 @@
 <body>
 <div class="site_wrapper container">
     <div class="row">
-        <!-- Menu sidebar --->
+        <!-- Menu sidebar -->
         <h1>Weather site</h1>
         <div class="menu_sidebar container col-12 col-lg-2 mb-1 mb-lg-0">
             <nav class="site_menu navbar">
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Website content -->
-        <div class="site_content col-12 col-lg-8">
+        <div class="site_content col-12 col-lg-8 mb-1">
             <form>
                     <div class="container login_container col-lg-6 col-sm-12">
                         <div class="form-group">
@@ -48,14 +48,40 @@
                             <input class="form-control" type="password" id="reg_conpass_form" name="reg_conpass_form" required>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
-                            <input class="form-control" type="submit" value="Register" required>
+                            <input class="form-control" type="submit" value="Register">
                         </div>
                     </div>
             </form>
         </div>
         <!-- Right sidebar -->
         <div class="right_sidebar container col-12 col-lg-2">
-            <p>Right</p>
+            <div class="local_weather_block">
+                <div class="local_weather_header">
+                    <h3>Weather in area</h3>
+                </div>
+                <div class="local_weather_data">
+                    <div class="local_weather_data_pair">
+                        <div class="temp_icon_bg value_icon"></div>
+                        <div class="local_weather_data_value">5.4 °C</div>
+                    </div>
+                    <div class="local_weather_data_pair">
+                        <div class="hum_icon_bg value_icon"></div>
+                        <div class="local_weather_data_value">15 %</div>
+                    </div>
+                    <div class="local_weather_data_pair">
+                        <div class="wind_icon_bg value_icon"></div>
+                        <div class="local_weather_data_value">4 km/h</div>
+                    </div>
+                    <div class="local_weather_data_pair">
+                        <div class="wind_arr_icon_bg value_icon"></div>
+                        <div class="local_weather_data_value">SW</div>
+                    </div>
+                    <div class="local_weather_data_pair">
+                        <div class="precip_icon_bg value_icon"></div>
+                        <div class="local_weather_data_value">0 mm</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
