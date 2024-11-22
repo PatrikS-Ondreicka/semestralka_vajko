@@ -68,42 +68,42 @@ body
 
 .date_icon_bg
 {
-    background-image: url("../images/calendar-fill.svg");
+    background-image: url("../../images/calendar-fill.svg");
 }
 
 .time_icon_bg
 {
-    background-image: url("../images/clock-fill.svg");
+    background-image: url("../../images/clock-fill.svg");
 }
 
 .temp_icon_bg
 {
-    background-image: url("../images/thermometer-half.svg");
+    background-image: url("../../images/thermometer-half.svg");
 }
 
 .hum_icon_bg
 {
-    background-image: url("../images/droplet-fill.svg");
+    background-image: url("../../images/droplet-fill.svg");
 }
 
 .user_icon_bg
 {
-    background-image: url("../images/person-fill.svg");
+    background-image: url("../../images/person-fill.svg");
 }
 
 .wind_icon_bg
 {
-    background-image: url("../images/wind.svg");
+    background-image: url("../../images/wind.svg");
 }
 
 .wind_arr_icon_bg
 {
-    background-image: url("../images/arrow-down-left.svg");
+    background-image: url("../../images/arrow-down-left.svg");
 }
 
 .precip_icon_bg
 {
-    background-image: url("../images/cloud-drizzle-fill.svg");
+    background-image: url("../../images/cloud-drizzle-fill.svg");
 }
 
 .value_icon
