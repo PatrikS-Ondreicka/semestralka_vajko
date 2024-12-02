@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 class Location extends \App\Core\Model
 {
     protected ?int $id = null;

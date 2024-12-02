@@ -1,9 +1,13 @@
 <?php
 
+namespace App\Models;
+
+use App\Datatypes\DateTime;
+
 class Data extends \App\Core\Model
 {
     protected ?int $id = null;
-    protected ?DateTime $date = null;
+    protected ?string $date = null;
     protected ?float $temperature = null;
     protected ?float $humidity = null;
     protected ?float $wind_speed = null;
@@ -12,7 +16,19 @@ class Data extends \App\Core\Model
 
     protected ?float $precipitation = null;
 
-    protected ?Location $location = null;
+    protected ?int $location = null;
+
+    protected ?int $user = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
 
     public function getHumidity(): ?float
     {
@@ -24,15 +40,16 @@ class Data extends \App\Core\Model
         $this->humidity = $humidity;
     }
 
-    public function getDate(): ?DateTime
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(?DateTime $date): void
+    public function setDate(?string $date): void
     {
         $this->date = $date;
     }
+
 
     public function getTemperature(): ?float
     {
@@ -74,14 +91,28 @@ class Data extends \App\Core\Model
         $this->precipitation = $precipitation;
     }
 
-    public function getLocation(): ?Location
+    public function getLocation(): ?int
     {
         return $this->location;
     }
 
-    public function setLocation(?Location $location): void
+    public function setLocation(?int $location): void
     {
         $this->location = $location;
     }
 
+    public function getUser(): ?int
+    {
+        return $this->user;
+    }
+
+    public function setUser(?int $user): void
+    {
+        $this->user = $user;
+    }
+    
+    public static function getTableName() : string
+    {
+        return "data";
+    }
 }

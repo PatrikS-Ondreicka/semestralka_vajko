@@ -1,4 +1,9 @@
-<form>
+
+<?php
+/** @var \App\Core\LinkGenerator $link */
+?>
+
+<form action="<?= $link->url("Data.uploadData")?>" method="post">
     <div class="container add_data_form_container col-md-9 col-sm-12">
 
         <div class="form-group">
@@ -41,6 +46,19 @@
             <div class="precip_icon_bg value_icon"></div>
             <label for="precipitation" class="form-label">Precipitation (mm)</label>
             <input type="number" id="precipitation" name="precipitation" class="form-control" required>
+        </div>
+
+        <div class="row">
+            <div class="compass_icon_bg value_icon"></div>
+            <label class="form-label">Location</label>
+            <div class="form-group col-xl-6 col-12">
+                <label for="lat" class="form-label">Latitude</label>
+                <input type="number" id="lat" name="lat" class="form-control" required>
+            </div>
+            <div class="form-group col-xl-6 col-12">
+                <label for="lon" class="form-label">Longitude </label>
+                <input type="number" id="lon" name="lon" class="form-control" required>
+            </div>
         </div>
 
         <div class="form-group col-lg-4 col-sm-12">

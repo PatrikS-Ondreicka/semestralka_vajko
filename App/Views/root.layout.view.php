@@ -14,10 +14,10 @@
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="public/css/index_style.css" rel="stylesheet">
-    <link href="public/css/table_style.css" rel="stylesheet">
-    <link href="public/css/form_style.css" rel="stylesheet">
-    <script src="public/js/script.js"></script>
+    <link href="../../public/css/index_style.css" rel="stylesheet">
+    <link href="../../public/css/table_style.css" rel="stylesheet">
+    <link href="../../public/css/form_style.css" rel="stylesheet">
+    <script src="../../public/js/script.js"></script>
 </head>
 <body>
 <div class="site_wrapper container">
