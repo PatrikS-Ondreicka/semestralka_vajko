@@ -53,29 +53,29 @@ if ($data && key_exists('weatherData', $data)){
         <div class="form-group">
             <div class="temp_icon_bg value_icon"></div>
             <label for="temperature" class="form-label">Temperature (°C)</label>
-            <input type="number" id="temperature" name="temperature" class="form-control" value="<?= $temp ?>"
-                   step="0.01" min="-90.0" max="57.0" required>
+            <input type="number" id="temperature" name="temperature" class="form-control" value="<?= $temp ?>">
+                   <!-- step="0.01" min="-90.0" max="57.0" required> -->
         </div>
 
         <div class="form-group">
             <div class="hum_icon_bg value_icon"></div>
             <label for="humidity" class="form-label">Humidity (%)</label>
-            <input type="number" id="humidity" name="humidity" class="form-control" value="<?= $hum ?>"
-                   min="0" max="100" required>
+            <input type="number" id="humidity" name="humidity" class="form-control" value="<?= $hum ?>">
+                   <!-- min="0" max="100" required> -->
         </div>
 
         <div class="wind_data_block row">
             <div class="form-group col-xl-6 col-12">
                 <div class="wind_icon_bg value_icon"></div>
                 <label for="wind_speed" class="form-label">Wind Speed (km/h)</label>
-                <input type="number" id="wind_speed" name="wind_speed" class="form-control" value="<?= $ws ?>"
-                       min="0" required>
+                <input type="number" id="wind_speed" name="wind_speed" class="form-control" value="<?= $ws ?>">
+                       <!-- min="0" required >-->
             </div>
 
             <div class="form-group col-xl-6 col-12">
                 <div class="wind_arr_icon_bg value_icon"></div>
                 <label for="wind_direction" class="form-label">Wind Direction</label>
-                <select id="wind_direction" name="wind_direction" class="form-select" required>
+                <select id="wind_direction" name="wind_direction" class="form-select"> <!-- required >-->
                     <option value="" disabled <?php if ($wd == "") {echo 'selected';} ?> >------</option>
                     <option value="N" <?php if ($wd == "N") {echo 'selected';} ?>>N</option>
                     <option value="NE" <?php if ($wd == "NW") {echo 'selected';} ?>>NW</option>
@@ -85,7 +85,6 @@ if ($data && key_exists('weatherData', $data)){
                     <option value="SW" <?php if ($wd == "SW") {echo 'selected';} ?>>SW</option>
                     <option value="W" <?php if ($wd == "W") {echo 'selected';} ?>>W</option>
                     <option value="NW" <?php if ($wd == "NW") {echo 'selected';} ?>>NW</option>
-                    <option value="GG">GG</option>
                 </select>
             </div>
         </div>
@@ -93,7 +92,8 @@ if ($data && key_exists('weatherData', $data)){
         <div class="form-group">
             <div class="precip_icon_bg value_icon"></div>
             <label for="precipitation" class="form-label">Precipitation (mm)</label>
-            <input type="number" id="precipitation" name="precipitation" class="form-control" value="<?= $precip ?>"required>
+            <input type="number" id="precipitation" name="precipitation" class="form-control" value="<?= $precip ?>"
+                   step="0.01"> <!-- min="0" required >-->
         </div>
 
         <div class="row">
@@ -115,4 +115,4 @@ if ($data && key_exists('weatherData', $data)){
     </div>
 </form>
 
-<script src="../../../public/js/formCheck.js"></script>
+<!-- <script src="../../../public/js/formCheck.js"></script> -->
