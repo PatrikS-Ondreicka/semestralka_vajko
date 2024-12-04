@@ -6,18 +6,23 @@ use App\Datatypes\DateTime;
 
 class Data extends \App\Core\Model
 {
+    const MIM_TEMP = -90.0;
+    const MAX_TEMP = 57.0;
+    const MIN_HUM = 0.0;
+    const MAX_HUM = 100.0;
+    const MIN_WIND_SPEED = 0.0;
+    const MIN_PRECIP = 0.0;
+
+    const WIND_DIRECTION_VALUES = array('N', 'S', 'E', 'W', 'NE', 'NW', 'SE', 'SW');
+
     protected ?int $id = null;
     protected ?string $date = null;
     protected ?float $temperature = null;
     protected ?float $humidity = null;
     protected ?float $wind_speed = null;
-
     protected ?string $wind_direction = null;
-
     protected ?float $precipitation = null;
-
     protected ?int $location = null;
-
     protected ?int $user = null;
 
     public function getId(): ?int

@@ -11,7 +11,6 @@ use App\Models\Data;
 
 class DataController extends AControllerBase
 {
-
     /**
      * @inheritDoc
      */
@@ -34,8 +33,14 @@ class DataController extends AControllerBase
     public function uploadData() : Response
     {
         $req = $this->request();
-        $data = new Data();
-
+        $id = $req->getValue('dataId');
+        $data = null;
+        if ($id > 0)
+        {
+            $data = Data::getOne($id);
+        } else {
+            $data = new Data();
+        }
         $data->setTemperature($req->getValue('temperature'));
         $data->setHumidity($req->getValue('humidity'));
         $data->setWindSpeed($req->getValue('wind_speed'));
@@ -48,6 +53,16 @@ class DataController extends AControllerBase
         $data->save();
         return new RedirectResponse($this->url("data.data"));
     }
+
+    public function dataedit()
+    {
+        $req = $this->request();
+        $id = (int) $req->getValue('dataId');
+
+        $weatherData = Data::getOne($id);
+        return $this->html(['weatherData' => $weatherData]);
+    }
+
 
     public function deleteData() : Response
     {
