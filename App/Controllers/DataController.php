@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Controllers\LocationController;
 use App\Core\AControllerBase;
 use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Core\Request;
+use App\Models\Location;
 use \DateTime;
 use App\Models\Data;
 use function Sodium\add;
@@ -29,6 +31,7 @@ class DataController extends AControllerBase
     public function dataform() : Response
     {
         return $this->html();
+
     }
 
     public function uploadData() : Response
@@ -74,6 +77,16 @@ class DataController extends AControllerBase
         if (is_null($data->getPrecipitation()) || $data->getPrecipitation() < Data::MIN_PRECIP) {
             $errors[] = "Value of precipitation must be greater or equal to 0";
         }
+
+        $loc = new Location();
+        $loc->setLat($req->getValue('lat'));
+        $loc->setLon($req->getValue('lon'));
+        $loc->setName($req->getValue('loc_name'));
+        if (!LocationController::locationExists($loc)) {
+            $loc->save();
+        }
+        $loc_id = LocationController::selectLocation($loc)->getId();
+        $data->setLocation($loc_id);
 
         if (!$errors) {
             $data->save();

@@ -4,6 +4,7 @@
 /** @var Array $data */
 
 use App\Models\Data;
+use \App\Models\Location;
 
 $id = -1;
 $temp = "";
@@ -13,6 +14,7 @@ $wd = "";
 $precip = "";
 $lat = "";
 $lon = "";
+$loc_name = "";
 $errors = null;
 
 if ($data && key_exists('errors', $data))
@@ -32,8 +34,11 @@ if ($data && key_exists('weatherData', $data)){
         $ws = $weatherData->getWindSpeed();
         $wd = $weatherData->getWindDirection();
         $precip = $weatherData->getPrecipitation();
-        $lat = 1;
-        $lon = 1;
+
+        $loc = Location::getOne($weatherData->getLocation());
+        $lat = $loc->getLat();
+        $lon = $loc->getLon();
+        $loc_name = $loc->getName();
     }
 }
 ?>
@@ -53,29 +58,29 @@ if ($data && key_exists('weatherData', $data)){
         <div class="form-group">
             <div class="temp_icon_bg value_icon"></div>
             <label for="temperature" class="form-label">Temperature (°C)</label>
-            <input type="number" id="temperature" name="temperature" class="form-control" value="<?= $temp ?>">
-                   <!-- step="0.01" min="-90.0" max="57.0" required> -->
+            <input type="number" id="temperature" name="temperature" class="form-control" value="<?= $temp ?>"
+                   step="0.01" min="-90.0" max="57.0" required>
         </div>
 
         <div class="form-group">
             <div class="hum_icon_bg value_icon"></div>
             <label for="humidity" class="form-label">Humidity (%)</label>
-            <input type="number" id="humidity" name="humidity" class="form-control" value="<?= $hum ?>">
-                   <!-- min="0" max="100" required> -->
+            <input type="number" id="humidity" name="humidity" class="form-control" value="<?= $hum ?>"
+                   min="0" max="100" required>
         </div>
 
         <div class="wind_data_block row">
             <div class="form-group col-xl-6 col-12">
                 <div class="wind_icon_bg value_icon"></div>
                 <label for="wind_speed" class="form-label">Wind Speed (km/h)</label>
-                <input type="number" id="wind_speed" name="wind_speed" class="form-control" value="<?= $ws ?>">
-                       <!-- min="0" required >-->
+                <input type="number" id="wind_speed" name="wind_speed" class="form-control" value="<?= $ws ?>"
+                       min="0" required>
             </div>
 
             <div class="form-group col-xl-6 col-12">
                 <div class="wind_arr_icon_bg value_icon"></div>
                 <label for="wind_direction" class="form-label">Wind Direction</label>
-                <select id="wind_direction" name="wind_direction" class="form-select"> <!-- required >-->
+                <select id="wind_direction" name="wind_direction" class="form-select" required>
                     <option value="" disabled <?php if ($wd == "") {echo 'selected';} ?> >------</option>
                     <option value="N" <?php if ($wd == "N") {echo 'selected';} ?>>N</option>
                     <option value="NE" <?php if ($wd == "NW") {echo 'selected';} ?>>NW</option>
@@ -93,20 +98,57 @@ if ($data && key_exists('weatherData', $data)){
             <div class="precip_icon_bg value_icon"></div>
             <label for="precipitation" class="form-label">Precipitation (mm)</label>
             <input type="number" id="precipitation" name="precipitation" class="form-control" value="<?= $precip ?>"
-                   step="0.01"> <!-- min="0" required >-->
+                   step="0.01" min="0" required >
         </div>
 
-        <div class="row">
-            <div class="compass_icon_bg value_icon"></div>
-            <label class="form-label">Location</label>
-            <div class="form-group col-xl-6 col-12">
-                <label for="lat" class="form-label">Latitude</label>
-                <input type="number" id="lat" name="lat" class="form-control" value="<?= $lat ?>" required>
+        <div id="location_selection">
+            <hr class="form_split_line">
+            <div id="location_selection_header">
+                <div class="compass_icon_bg value_icon"></div>
+                <label class="form-label">Location</label>
+                <br>
+                <div class="row">
+                    <div>
+                        <input type="radio" id="manual" name="selection_mode" value="manual" checked>
+                        <label for="manual">Manual</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="automatic" name="selection_mode" value="automatic">
+                        <label for="automatic">Automatic</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="map" name="selection_mode" value="map">
+                        <label for="map">Map</label>
+                    </div>
+                </div>
+
             </div>
-            <div class="form-group col-xl-6 col-12">
-                <label for="lon" class="form-label">Longitude</label>
-                <input type="number" id="lon" name="lon" class="form-control" value="<?= $lon ?>" required>
+            <div id="location_selection_content">
+
+                <!-- Manual selection content -->
+                <div id="man_selection_content" class="selection_content row">
+                    <div class="form-group col-12">
+                        <label for="lat" class="form-label">Name</label>
+                        <input type="text" id="loc_name" name="loc_name" class="form-control" value="<?= $loc_name ?>">
+                    </div>
+                    <div class="form-group col-xl-6 col-12">
+                        <label for="lat" class="form-label">Latitude</label>
+                        <input type="number" id="lat" name="lat" class="form-control" step="0.0001" value="<?= $lat ?>" required>
+                    </div>
+                    <div class="form-group col-xl-6 col-12">
+                        <label for="lon" class="form-label">Longitude</label>
+                        <input type="number" id="lon" name="lon" class="form-control" step="0.0001" value="<?= $lon ?>" required>
+                    </div>
+                </div>
             </div>
+
+            <!-- Automatic selection content -->
+            <div id="auto_selection_content" class="selection_content" hidden="hidden">Auto</div>
+
+            <!-- Map selection content-->
+            <div id="map_selection_content" class="selection_content" hidden="hidden">Map</div>
         </div>
 
         <div class="form-group col-lg-4 col-sm-12">
@@ -115,4 +157,5 @@ if ($data && key_exists('weatherData', $data)){
     </div>
 </form>
 
-<!-- <script src="../../../public/js/formCheck.js"></script> -->
+<script src="../../../public/js/formCheck.js"></script>
+<script src="../../../public/js/locationSelectOptions.js"></script>

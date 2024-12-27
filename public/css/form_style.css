@@ -41,6 +41,11 @@ label
     border: 1px solid var(--primary);
 }
 
+.form_split_line
+{
+    background-color: var(--primary);
+}
+
 .wind_direction option:hover
 {
 }

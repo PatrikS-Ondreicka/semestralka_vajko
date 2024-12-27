@@ -116,6 +116,7 @@ body
     width: 1em;
     height: 1em;
     color: var(--primary);
+    background-repeat: no-repeat;
 }
 
 /*For testing only*/
