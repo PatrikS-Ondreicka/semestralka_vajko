@@ -4,7 +4,7 @@
 /** @var \App\Core\LinkGenerator $link */
 ?>
 
-<form>
+<form action="<?= $link->url("Auth.loginAction")?>" method="post">
     <div class="container login_container col-lg-6 col-sm-12">
         <div class="form-group">
             <label for="login_text_form">User Login</label>
@@ -18,4 +18,14 @@
             <input class="form-control" type="submit" value="Login">
         </div>
     </div>
+
+    <?php
+        if (isset($_GET['error']))
+        {
+            foreach ($_GET['error'] as $error)
+            {
+                echo '<p class="error">' . $error . '</p>';
+            }
+        }
+    ?>
 </form>

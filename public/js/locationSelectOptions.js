@@ -6,8 +6,8 @@ let selectionContentDiv = document.getElementById('location_selection_content');
 
 function setContentVisible (content, content_class_name)
 {
-    let contentArray = document.getElementsByClassName(content_class_name);
-    contentArray.forEach((item) => {item.style.visibility = "hidden";});
+    let contentArray = document.querySelectorAll("." + content_class_name);
+    Array.from(contentArray).forEach((item) => {item.style.visibility = "hidden";});
     content.style.visibility = "visible";
 }
 

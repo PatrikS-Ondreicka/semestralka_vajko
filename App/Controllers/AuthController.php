@@ -6,6 +6,9 @@ use App\Config\Configuration;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Core\Responses\ViewResponse;
+use App\Controllers\UserController;
+use App\Models\User;
+use function Sodium\add;
 
 /**
  * Class AuthController
@@ -40,18 +43,59 @@ class AuthController extends AControllerBase
      */
     public function loginAction(): Response
     {
-        $formData = $this->app->getRequest()->getPost();
-        $logged = null;
-        if (isset($formData['submit'])) {
-            $logged = $this->app->getAuth()->login($formData['login'], $formData['password']);
-            if ($logged) {
-                return $this->redirect($this->url("admin.index"));
-            }
+        $data = [];
+        $errors = [];
+        $is_error = false;
+
+        $req = $this->request();
+
+        $login = $req->getValue('login_text_form');
+        $password = $req->getValue('login_pass_form');
+
+        $logged = $this->app->getAuth()->login($login, $password);
+        if ($logged) {
+            return $this->redirect($this->url("data.data"));
+        } else {
+            $is_error = true;
+            $errors[] = "Incorrect login or password";
+            $data['error'] = $errors;
+            return $this->redirect($this->url("Auth.login", $data));
+        }
+    }
+
+    public function registerAction() : Response
+    {
+        $errors = [];
+        $is_error = false;
+
+        $req = $this->request();
+
+        $login = $req->getValue('reg_text_form');
+        $password = $req->getValue('reg_pass_form');
+        $conpass = $req->getValue('reg_conpass_form');
+        $user = new User();
+        $user->setUsername($login);
+        $user->setPassword($password);
+        if ($password != $conpass) {
+            $is_error = true;
+            $errors[] = "Passwords don't match!";
         }
 
-        $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
-        return $this->html($data);
+        if (UserController::userExists($user)) {
+            $is_error = true;
+            $errors[] = "User already exists!";
+        }
+
+        if ($is_error)
+        {
+            $data = (['error' => $errors]);
+            return $this->redirect($this->url("auth.register", $data));
+        }
+
+        UserController::addUser($user);
+        return $this->redirect($this->url("data.data"));
     }
+
 
     /**
      * Logout a user

@@ -39,6 +39,12 @@
                     <li class="nav_item">
                         <a class="nav-link" href=<?= $link->url("data.dataform") ?>>Add data form prototype</a>
                     </li>
+                    <?php
+                        if ($auth->isLogged())
+                        {
+                            echo $auth->getLoggedUserName();
+                        }
+                    ?>
                 </ul>
             </nav>
         </div>
