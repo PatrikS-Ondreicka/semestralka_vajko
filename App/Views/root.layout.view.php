@@ -3,6 +3,8 @@
 /** @var string $contentHTML */
 /** @var \App\Core\IAuthenticator $auth */
 /** @var \App\Core\LinkGenerator $link */
+
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -25,26 +27,54 @@
         <!-- Menu sidebar -->
         <h1>Weather site</h1>
         <div class="menu_sidebar container col-12 col-lg-2 mb-1 mb-lg-0">
+            <div id="user_info">
+                <ul class="navbar-nav">
+                <?php
+                    if ($auth->isLogged()) {
+                        $username = $auth->getLoggedUserName();
+
+                        $profile_link = $link->url("profile.profile", ['id' => $auth->getLoggedUserId()]);
+                        $logout_link = $link->url("auth.logout");
+
+                        echo    '<li class="nav_item">'.
+                                    '<a href='.$profile_link.'>Logged as: '.$username.'</a>'.
+                                '</li>';
+
+                        echo    '<li class="nav_item">'.
+                                    '<a href='.$logout_link.'>Logout</a>'.
+                                '</li>';
+
+                    }
+                ?>
+                </ul>
+            </div>
             <nav class="site_menu navbar">
                 <ul class="navbar-nav">
-                    <li class="nav_item">
-                        <a class="nav-link" href=<?= $link->url("auth.login") ?>>Login</a>
-                    </li>
-                    <li class="nav_item">
-                        <a class="nav-link" href=<?= $link->url("auth.register") ?>>Registration</a>
-                    </li>
+                    <?php
+                        if (!$auth->isLogged()) {
+                            $log_link = $link->url("auth.login");
+                            $rag_link = $link->url("auth.register");
+
+                            echo    '<li class="nav_item">'.
+                                    '<a class="nav-link" href="'.$log_link.'">Login</a>'.
+                                    '</li>';
+
+                            echo    '<li class="nav_item">'.
+                                    '<a class="nav-link" href="'.$rag_link.'">Registration</a>'.
+                                    '</li>';
+                        }
+
+                        if ($auth->isLogged())
+                        {
+                            $dataform_link = $link->url("data.dataform");
+                            echo    '<li class="nav_item">'.
+                                        '<a class="nav-link" href="'.$dataform_link.'">Add data form prototype</a>'.
+                                    '</li>';
+                        }
+                    ?>
                     <li class="nav_item">
                         <a class="nav-link" href=<?= $link->url("data.data") ?>>Table prototype</a>
                     </li>
-                    <li class="nav_item">
-                        <a class="nav-link" href=<?= $link->url("data.dataform") ?>>Add data form prototype</a>
-                    </li>
-                    <?php
-                        if ($auth->isLogged())
-                        {
-                            echo $auth->getLoggedUserName();
-                        }
-                    ?>
                 </ul>
             </nav>
         </div>

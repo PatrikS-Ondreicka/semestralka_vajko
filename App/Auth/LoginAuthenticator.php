@@ -20,7 +20,8 @@ class LoginAuthenticator implements IAuthenticator
         if (UserController::userExists($user)) {
             $pass_hash = UserController::getPasswordHash($login);
             if (password_verify($password, $pass_hash)) {
-                $_SESSION['user'] = $login;
+                session_start();
+                $_SESSION['user'] = UserController::getUserId($login);
                 return true;
             } else {
                 return false;
@@ -35,6 +36,7 @@ class LoginAuthenticator implements IAuthenticator
      */
     public function logout(): void
     {
+        session_start();
         if (isset($_SESSION["user"])) {
             unset($_SESSION["user"]);
             session_destroy();
@@ -46,7 +48,7 @@ class LoginAuthenticator implements IAuthenticator
      */
     public function getLoggedUserName(): string
     {
-        return isset($_SESSION['user']) ? $_SESSION['user'] : throw new \Exception("User not logged in");
+        return isset($_SESSION['user']) ? UserController::getUsername($_SESSION['user']) : throw new \Exception("User not logged in");
     }
 
     /**

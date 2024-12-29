@@ -2,6 +2,7 @@
 /** @var \App\Core\LinkGenerator $link */
 
     use App\Models\Data;
+    use App\Models\User;
 
     $weatherData = Data::getAll();
 ?>
@@ -16,7 +17,7 @@
         <div class="data_block_header">
             <div class="user_data_block">
                 <div class="value_icon user_icon_bg"></div>
-                <div class="value_block_value"><?= $data->getUser() ?></div>
+                <div class="value_block_value"><?= (!is_null(User::getOne($data->getUser()))) ? User::getOne($data->getUser())->getUsername() : "unknown"?></div>
             </div>
 
             <div class="date_time_info_block">

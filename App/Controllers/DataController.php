@@ -46,13 +46,13 @@ class DataController extends AControllerBase
         } else {
             $data = new Data();
         }
+        session_start();
         $data->setTemperature($req->getValue('temperature'));
         $data->setHumidity($req->getValue('humidity'));
         $data->setWindSpeed($req->getValue('wind_speed'));
         $data->setWindDirection($req->getValue('wind_direction'));
         $data->setPrecipitation($req->getValue('precipitation'));
-        $data->setLocation(1); // will be replaced by location from database
-        $data->setUser(1); // will be re replaced by id of the logged user
+        $data->setUser($this->app->getAuth()->getLoggedUserId());
         $data->setDate((new DateTime())->format('Y-m-d H:i:s'));
 
         if (is_null($data->getTemperature()) || $data->getTemperature() < Data::MIM_TEMP
@@ -78,6 +78,7 @@ class DataController extends AControllerBase
             $errors[] = "Value of precipitation must be greater or equal to 0";
         }
 
+        // Setting of a location
         $loc = new Location();
         $loc->setLat($req->getValue('lat'));
         $loc->setLon($req->getValue('lon'));

@@ -6,6 +6,7 @@ use App\Core\AControllerBase;
 use App\Core\DB\Connection;
 use App\Core\Responses\Response;
 use App\Models\User;
+use App\Controllers\ProfileController;
 use Exception;
 use PDO;
 
@@ -24,6 +25,7 @@ class UserController extends AControllerBase
     {
         $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
         $user->save();
+        ProfileController::addProfile($user);
     }
 
     public static function getUsername(int $user_id): string
@@ -33,6 +35,19 @@ class UserController extends AControllerBase
             return $user->getUsername();
         } else {
             return "";
+        }
+    }
+
+    public static function getUserId(string $username): int
+    {
+        try {
+            $con = Connection::connect();
+            $stmt = $con->prepare("SELECT id AS USER_ID FROM users WHERE username = '". $username . "'");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['USER_ID'];
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
         }
     }
 
