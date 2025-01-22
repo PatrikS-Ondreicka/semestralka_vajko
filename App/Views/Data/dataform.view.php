@@ -42,6 +42,9 @@ if ($data && key_exists('weatherData', $data)){
     }
 }
 ?>
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
 <div id="errors">
     <?php
         if ($errors != null)
@@ -128,7 +131,7 @@ if ($data && key_exists('weatherData', $data)){
             <div id="location_selection_content">
 
                 <!-- Manual selection content -->
-                <div id="man_selection_content" class="selection_content row">
+                <div id="man_selection_content" class="selection_content row" style="display:flex;">
                     <div class="form-group col-12">
                         <label for="lat" class="form-label">Name</label>
                         <input type="text" id="loc_name" name="loc_name" class="form-control" value="<?= $loc_name ?>">
@@ -142,13 +145,17 @@ if ($data && key_exists('weatherData', $data)){
                         <input type="number" id="lon" name="lon" class="form-control" step="0.0001" value="<?= $lon ?>" required>
                     </div>
                 </div>
+
+                <!-- Automatic selection content -->
+                <div id="auto_selection_content" class="selection_content" style="display:flex;">Auto</div>
+
+                <!-- Map selection content-->
+                <div id="map_selection_content" class="selection_content" style="display:flex;">
+                    <div id="map" style="width:600px; height:600px;">
+
+                    </div>
+                </div>
             </div>
-
-            <!-- Automatic selection content -->
-            <div id="auto_selection_content" class="selection_content" hidden="hidden">Auto</div>
-
-            <!-- Map selection content-->
-            <div id="map_selection_content" class="selection_content" hidden="hidden">Map</div>
         </div>
 
         <div class="form-group col-lg-4 col-sm-12">
@@ -156,6 +163,16 @@ if ($data && key_exists('weatherData', $data)){
         </div>
     </div>
 </form>
+
+<script>
+    console.log(L);
+    let map = L.map('map');
+    map.setView([0, 0], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+</script>
+
 
 <script src="../../../public/js/formCheck.js"></script>
 <script src="../../../public/js/locationSelectOptions.js"></script>

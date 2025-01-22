@@ -6,6 +6,7 @@
 
     $weatherData = Data::getAll();
 ?>
+
 <div class="container col-md-9 col-sm-12">
     <button class="btn" id="tempChangeButton">°C</button>
     <button class="btn" id="speedChangeButton">km/h</button>
@@ -67,10 +68,9 @@
                     </span>
                 </div>
             </div>
-        </div>
-        <div>
-            <a href="<?= $link->url('data.deleteData', ['dataId' => $data->getId()]) ?>"  class="btn">Delete</a>
-            <a href="<?= $link->url('data.dataedit', ['dataId' => $data->getId()]) ?>"  class="btn">Edit</a>
+            <div>
+                <a href="<?= $link->url('data.detail', ['dataId' => $data->getId()]) ?>"  class="btn">Detail</a>
+            </div>
         </div>
     </div>
 </div>

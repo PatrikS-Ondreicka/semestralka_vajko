@@ -115,6 +115,11 @@ class Data extends \App\Core\Model
     {
         $this->user = $user;
     }
+
+    public function toHtml()
+    {
+
+    }
     
     public static function getTableName() : string
     {

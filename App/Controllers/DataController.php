@@ -31,7 +31,20 @@ class DataController extends AControllerBase
     public function dataform() : Response
     {
         return $this->html();
+    }
 
+    public function statistics() : Response
+    {
+        return $this->html();
+    }
+
+    public function detail() : Response
+    {
+        $req = $this->request();
+        $id = $id = $req->getValue('dataId');
+        $data = Data::getOne($id);
+        $location = Location::getOne($data->getLocation());
+        return $this->html(['weather_data' => $data, 'location' => $location]);
     }
 
     public function uploadData() : Response

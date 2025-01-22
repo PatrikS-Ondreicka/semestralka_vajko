@@ -16,6 +16,7 @@ session_start();
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <link href="../../public/css/index_style.css" rel="stylesheet">
     <link href="../../public/css/table_style.css" rel="stylesheet">
     <link href="../../public/css/form_style.css" rel="stylesheet">
@@ -68,12 +69,15 @@ session_start();
                         {
                             $dataform_link = $link->url("data.dataform");
                             echo    '<li class="nav_item">'.
-                                        '<a class="nav-link" href="'.$dataform_link.'">Add data form prototype</a>'.
+                                        '<a class="nav-link" href="'.$dataform_link.'">Add data</a>'.
                                     '</li>';
                         }
                     ?>
                     <li class="nav_item">
-                        <a class="nav-link" href=<?= $link->url("data.data") ?>>Table prototype</a>
+                        <a class="nav-link" href=<?= $link->url("data.data") ?>>View data</a>
+                    </li>
+                    <li class="nav_item">
+                        <a class="nav-link" href=<?= $link->url("data.statistics") ?>>Statistics</a>
                     </li>
                 </ul>
             </nav>
