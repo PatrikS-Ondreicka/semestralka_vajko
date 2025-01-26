@@ -1,6 +1,5 @@
 <?php
 ?>
-
 <h1>Weather Statistics</h1>
 
 <form>
@@ -39,19 +38,35 @@
 <hr>
 
 <h2>Temperature</h2>
-<img src="placeholder_graph.png" alt="Temperature Graph" width="600" height="300">
+<div id="temperature_chart" width="400" height="200"></div>
 
 <hr>
 
 <h2>Humidity</h2>
-<img src="placeholder_graph.png" alt="Humidity Graph" width="600" height="300">
+<div id="humidity_chart"></div>
 
 <hr>
 
 <h2>Wind Speed</h2>
-<img src="placeholder_graph.png" alt="Wind Speed Graph" width="600" height="300">
+<div id="wind_speed_chart"></div>
 
 <hr>
 
 <h2>Precipitation</h2>
-<img src="placeholder_graph.png" alt="Precipitation Graph" width="600" height="300">
+<div id=pPrecipitation_chart"></div>
+
+<script type="module">
+    import {DataChart} from "/public/js/DataChart.js";
+
+    const data = [
+        { value: 18, date: '2024-10-26' },
+        { value: 22, date: '2024-10-27' },
+        { value: 20,  date: '2024-10-28' },
+        { value: 25, date: '2024-10-29' },
+        { value: 23, date: '2024-10-30' },
+    ];
+
+    let tempChart = new DataChart(data, "temperature_chart", "Temperature", 'rgb(75, 192, 192)');
+    tempChart.createChart();
+
+</script>

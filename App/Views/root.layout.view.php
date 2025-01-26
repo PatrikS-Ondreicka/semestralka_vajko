@@ -21,6 +21,7 @@ session_start();
     <link href="../../public/css/table_style.css" rel="stylesheet">
     <link href="../../public/css/form_style.css" rel="stylesheet">
     <script src="../../public/js/script.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
 <body>
 <div class="site_wrapper container">

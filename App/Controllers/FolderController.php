@@ -6,6 +6,7 @@ use App\Core\AControllerBase;
 use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Models\Folder;
+use App\Models\InFolder;
 use App\Models\Profile;
 use App\Models\User;
 
@@ -39,25 +40,57 @@ class FolderController extends AControllerBase
         return new RedirectResponse($this->url("profile.profileData", ['user_id' => $owner]));
     }
 
+    public function folderEdit() : Response
+    {
+        $req = $this->request();
+        $folder = Folder::getOne($req->getValue('folder'));
+        return $this->html(['folder' => $folder]);
+    }
+
     public function update() : Response
     {
-
+        $req = $this->request();
+        $folder = Folder::getOne($req->getValue('folder'));
+        $folder->setName($req->getValue('name'));
+        $folder->setDescription($req->getValue('description'));
+        $folder->setColor($req->getValue('color'));
+        $folder->save();
+        return new RedirectResponse($this->url("folder.folderEdit", ['folder' => $folder->getId()]));
     }
 
     public function delete() : Response
     {
-
+        $req = $this->request();
+        $folder = Folder::getOne($req->getValue('folder'));
+        $owner = $folder->getOwner();
+        $folder->delete();
+        return new RedirectResponse($this->url("profile.profileData", ['user_id' => $owner]));
     }
 
     public function place() : Response
     {
         session_start();
+        $req = $this->request();
+        $folder_id = $req->getValue('folder');
+        $data_id = $req->getValue('data_id');
+
+        $in_folder = new InFolder();
+        $in_folder->setFolder($folder_id);
+        $in_folder->setData($data_id);
+        $in_folder->save();
+
         $owner = $this->app->getAuth()->getLoggedUserId();
         return new RedirectResponse($this->url("profile.profileData", ['user_id' => $owner]));
     }
 
     public function remove() : Response
     {
-
+        $req = $this->request();
+        $folder = $req->getValue('folder');
+        $data = $req->getValue('data');
+        $in_folder = InFolder::getAll("`folder` = ? AND `data` = ?", [$folder, $data])[0];
+        $in_folder->delete();
+        $folder_data = Folder::getOne($folder)->getAllFromFolder();
+        return new RedirectResponse($this->url("profile.profileFolder", ['folder_data' => $folder_data, 'folder' => $folder]));
     }
 }

@@ -47,6 +47,7 @@ $folders = $data['folders'];
             <div class="folder-body">
                 <p class="folder-description"><?= $folder->getDescription(); ?></p>
             </div>
+            <a href="<?= $link->url("profile.profileFolder", ['folder' => $folder->getId()]) ?>">view</a>
         </div>
     <?php endforeach; ?>
 </div>
@@ -109,10 +110,10 @@ $folders = $data['folders'];
                     <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Detail</a>
                 </div>
                 <div>
-                    <form action="<?= $link->url("Folder.place", ['folder_id' => $folder->getId(), 'data_id' => $weather_data->getId()])?>" method="post">
+                    <form action="<?= $link->url("folder.place", ['data_id' => $weather_data->getId()])?>" method="post">
                         <div class="mb-3">
-                            <label for="color" class="form-label">Color:</label>
-                            <select class="form-select" id="color" name="color">
+                            <label for="folder" class="form-label">Folder:</label>
+                            <select class="form-select" id="folder" name="folder">
                                 <?php foreach  ($folders as $folder):?>
                                     <option value="<?= $folder->getId(); ?>"><?= $folder->getName(); ?></option>
                                 <?php endforeach; ?>

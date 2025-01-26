@@ -41,6 +41,14 @@ class ProfileController extends AControllerBase
         return $this->html(['user_data' => $user_data, 'folders' => $folders]);
     }
 
+    public function profileFolder()
+    {
+        $req = $this->request();
+        $folder = Folder::getOne($req->getValue('folder'));
+        $folder_data = $folder->getAllFromFolder();
+        return $this->html(['folder_data' => $folder_data, 'folder' => $folder]);
+    }
+
     public function editProfile() : Response
     {
         $req = $this->request();
