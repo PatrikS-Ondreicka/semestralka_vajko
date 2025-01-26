@@ -1,5 +1,12 @@
 <?php
+/** @var \App\Core\LinkGenerator $link */
+
+use App\Models\Data;
+use App\Models\Location;
+
+$locations = Location::getAll();
 ?>
+
 <h1>Weather Statistics</h1>
 
 <form>
@@ -9,15 +16,16 @@
         <label for="location">Location:</label>
         <input type="text" id="location" name="location" list="location-list">
         <datalist id="location-list">
-            <option value="London">
-            <option value="New York">
-            <option value="Tokyo">
+            <?php foreach ($locations as $loc): ?>
+            <option value="<?= $loc->getId();?>"><?= $loc->getName(); ?></option>
+            <?php endforeach; ?>
         </datalist>
 
         <br><br>
 
         <label for="data-type">Data Type:</label>
         <select id="data-type" name="data-type">
+            <option value="values">Values</option>
             <option value="average">Average</option>
             <option value="min">Minimum</option>
             <option value="max">Maximum</option>
@@ -53,20 +61,6 @@
 <hr>
 
 <h2>Precipitation</h2>
-<div id=pPrecipitation_chart"></div>
+<div id="precipitation_chart"></div>
 
-<script type="module">
-    import {DataChart} from "/public/js/DataChart.js";
-
-    const data = [
-        { value: 18, date: '2024-10-26' },
-        { value: 22, date: '2024-10-27' },
-        { value: 20,  date: '2024-10-28' },
-        { value: 25, date: '2024-10-29' },
-        { value: 23, date: '2024-10-30' },
-    ];
-
-    let tempChart = new DataChart(data, "temperature_chart", "Temperature", 'rgb(75, 192, 192)');
-    tempChart.createChart();
-
-</script>
+<script src="/public/js/statsScript.js" type="module"></script>
