@@ -11,45 +11,51 @@ $folders = $data['folders'];
 
 ?>
 <div>
-    <div class="container mt-5">
-        <form action="<?= $link->url("Folder.create")?>" method="post">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-center">Create New Folder</h4>
             </div>
-
-            <div class="mb-3">
-                <label for="description" class="form-label">Description:</label>
-                <textarea class="form-control" id="description" name="description"></textarea>
+            <div class="card-body">
+                <form action="<?= $link->url("Folder.create")?>" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color:</label>
+                        <select class="form-select" id="color" name="color">
+                            <option value="#FF0000" style="background-color: #FF0000;"></option>
+                            <option value="#00FF00" style="background-color: #00FF00;"></option>
+                            <option value="#0000FF" style="background-color: #0000FF;"></option>
+                            <option value="#FFFF00" style="background-color: #FFFF00;"></option>
+                            <option value="#FF00FF" style="background-color: #FF00FF;"></option>
+                            <option value="#00FFFF" style="background-color: #00FFFF;"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create Folder</button>
+                </form>
             </div>
-
-            <div class="mb-3">
-                <label for="color" class="form-label">Color:</label>
-                <select class="form-select" id="color" name="color">
-                    <option value="#FF0000">Red</option>
-                    <option value="#00FF00">Green</option>
-                    <option value="#0000FF">Blue</option>
-                    <option value="#FFFF00">Yellow</option>
-                    <option value="#FF00FF">Magenta</option>
-                    <option value="#00FFFF">Cyan</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Create Folder</button>
-        </form>
+        </div>
     </div>
 
-    <?php foreach  ($folders as $folder):?>
-        <div class="folder-card" style="background-color: <?= $folder->getColor(); ?>">
-            <div class="folder-header">
-                <h2 class="folder-name"><?= $folder->getName(); ?></h2>
+    <div class="mt-2">
+        <?php foreach  ($folders as $folder):?>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm" style="background-color: <?= $folder->getColor(); ?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $folder->getName(); ?></h5>
+                        <p class="card-text"><?= $folder->getDescription(); ?></p>
+                        <a href="<?= $link->url("profile.profileFolder", ['folder' => $folder->getId()]) ?>" class="btn btn-primary">View</a>
+                    </div>
+                </div>
             </div>
-            <div class="folder-body">
-                <p class="folder-description"><?= $folder->getDescription(); ?></p>
-            </div>
-            <a href="<?= $link->url("profile.profileFolder", ['folder' => $folder->getId()]) ?>">view</a>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
 </div>
 <div class="content-list">
     <h3>Data</h3>
@@ -110,16 +116,14 @@ $folders = $data['folders'];
                     <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Detail</a>
                 </div>
                 <div>
-                    <form action="<?= $link->url("folder.place", ['data_id' => $weather_data->getId()])?>" method="post">
-                        <div class="mb-3">
-                            <label for="folder" class="form-label">Folder:</label>
-                            <select class="form-select" id="folder" name="folder">
-                                <?php foreach  ($folders as $folder):?>
-                                    <option value="<?= $folder->getId(); ?>"><?= $folder->getName(); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add to folder</button>
+                    <form action="<?= $link->url("folder.place", ['data_id' => $weather_data->getId()])?>" method="post" class="d-flex align-items-center">
+                        <label for="folder" class="form-label me-2 mb-0">Folder:</label>
+                        <select class="form-select form-select-sm" id="folder" name="folder">
+                            <?php foreach  ($folders as $folder):?>
+                                <option value="<?= $folder->getId(); ?>"><?= $folder->getName(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm ms-2">Add</button>
                     </form>
                 </div>
             </div>

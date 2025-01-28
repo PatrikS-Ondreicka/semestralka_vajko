@@ -15,6 +15,7 @@ use App\Models\Folder;
 class ProfileController extends AControllerBase
 {
 
+    static string $PICTURE_DIR = 'public/profile/';
     /**
      * @inheritDoc
      */
@@ -62,7 +63,7 @@ class ProfileController extends AControllerBase
 
         $new_username = $req->getValue('username');
         $new_desc = $req->getValue('description');
-        $new_profile_pic = $req->getValue('profile_pic');
+        $new_profile_pic_file = $req->getFiles()['profile_pic'];
 
         if (is_null($new_username))
         {
@@ -80,9 +81,11 @@ class ProfileController extends AControllerBase
             $new_user->save();
             $username = $new_user->getUsername();
         }
-
         $profile->setDescription($new_desc);
-        $profile->setProfilePic($new_profile_pic);
+        $new_file_location = $this::$PICTURE_DIR.rand(0, 255).'-'.$new_profile_pic_file['name'];
+        move_uploaded_file($new_profile_pic_file['tmp_name'], $new_file_location);
+        unlink($profile->getProfilePic());
+        $profile->setProfilePic($new_file_location);
         $profile->save();
         return $this->html(['user_id' => $user_id, 'username' => $username, 'profile' => $profile]);
     }

@@ -11,12 +11,18 @@ $folder = $data['folder'];
 
 ?>
 
-<a href="<?= $link->url('folder.folderEdit', ['folder' => $folder->getId()])?>">Edit</a>
-    <a href="<?= $link->url('folder.delete', ['folder' => $folder->getId()])?>">Delete</a>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h2><?= $folder->getName() ?></h2>
+            <p><?= $folder->getDescription() ?></p>
+            <a href="<?= $link->url('folder.folderEdit', ['folder' => $folder->getId()])?>" class="btn btn-primary">Edit Folder</a>
+            <a href="<?= $link->url('folder.delete', ['folder' => $folder->getId()])?>" class="btn btn-danger">Delete Folder</a>
+        </div>
+    </div>
 
 <?php foreach  ($user_data as $weather_data):?>
     <div class="data_grid container col-md-9 col-sm-12">
-        <div class="data_block container">
+        <div class="data_block container" style="background-color:<?= $folder->getColor(); ?>;">
             <div class="data_block_header">
                 <div class="user_data_block">
                     <div class="value_icon user_icon_bg"></div>

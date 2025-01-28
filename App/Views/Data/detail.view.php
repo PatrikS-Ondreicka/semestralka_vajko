@@ -6,8 +6,6 @@ $weather_data = $data['weather_data'];
 $location = $data['location'];
 ?>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
 <div class="container">
     <h1>Weather Data Details</h1>
 
@@ -67,7 +65,6 @@ $location = $data['location'];
     map.touchZoom.disable();
     map.keyboard.disable();
     map.zoomControl.remove();
-
     location_marker = L.marker([lat, lon], 7);
     location_marker.addTo(map);
 

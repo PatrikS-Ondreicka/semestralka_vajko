@@ -6,9 +6,9 @@ class DataAPI extends DataService {
         super("dataApi");
     }
 
-    async getAllData() {
+    async getAllData(minDate, maxDate, location) {
         return await this.sendRequest(
-            "getAllData",
+            "getAllData" + this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
             "POST",
             200,
             null,
@@ -33,36 +33,36 @@ class DataAPI extends DataService {
             []);
     }
 
-    async getPrecipitation(){
+    async getPrecipitation(minDate, maxDate, location){
         return await this.sendRequest(
-            "getPrecipitation",
+            "getPrecipitation" + this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
             "POST",
             200,
             null,
             []);
     }
 
-    async getTemperature(){
+    async getTemperature(minDate, maxDate, location){
         return await this.sendRequest(
-            "getTemperature",
+            "getTemperature" + this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
             "POST",
             200,
             null,
             []);
     }
 
-    async getHumidity(){
+    async getHumidity(minDate, maxDate, location){
         return await this.sendRequest(
-            "getHumidity",
+            "getHumidity"+ this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
             "POST",
             200,
             null,
             []);
     }
 
-    async getWindSpeed(){
+    async getWindSpeed(minDate, maxDate, location){
         return await this.sendRequest(
-            "getWindSpeed",
+            "getWindSpeed"+ this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
             "POST",
             200,
             null,

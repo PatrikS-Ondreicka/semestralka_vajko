@@ -21,4 +21,37 @@ async function defaultCharts() {
     precChart.createChart();
 }
 
-defaultCharts();
+async function clickEvent() {
+    const locationElement = document.getElementById('location-list');
+    const valueTypeElement = document.getElementById('data-type');
+    const fromDateElement = document.getElementById('from-date');
+    const toDateElement = document.getElementById('to-date');
+
+    let location = locationElement.value;
+    let valueType = valueTypeElement.value;
+    let fromDate = fromDateElement.value;
+    let toDate = toDateElement.value;
+
+    const dataAPI = new DataAPI();
+
+    const tempData = await dataAPI.getTemperature(fromDate, toDate, location);
+    let tempChart = new DataChart(tempData, "temperature_chart", "Temperature", 'rgb(215,68,68)');
+    tempChart.createChart();
+
+    const humData = await dataAPI.getHumidity(fromDate, toDate, location);
+    let humChart = new DataChart(humData, "humidity_chart", "Humidity", 'rgb(75,85,192)');
+    humChart.createChart();
+
+    const wsData = await dataAPI.getWindSpeed(fromDate, toDate, location);
+    let wsChart = new DataChart(wsData, "wind_speed_chart", "Wind Speed", 'rgb(192,169,75)');
+    wsChart.createChart();
+
+    const precData = await dataAPI.getPrecipitation(fromDate, toDate, location);
+    let precChart = new DataChart(precData, "precipitation_chart", "Precipitation", 'rgb(184,75,192)');
+    precChart.createChart();
+}
+
+await defaultCharts();
+
+const confirmButton = document.getElementById('applyFiltersButton');
+confirmButton.onclick = () => clickEvent();

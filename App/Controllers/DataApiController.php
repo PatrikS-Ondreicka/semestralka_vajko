@@ -27,7 +27,26 @@ class DataApiController extends AControllerBase
 
     public function getAllData(): Response
     {
-        $result = Data::getAll();
+        $req = $this->request();
+        $minDate = $req->getValue('minDate');
+        $maxDate = $req->getValue('maxDate');
+        $location = $req->getValue('location');
+        $result = [];
+
+        if ($minDate !== "undefined" && $maxDate !== "undefined") {
+            $result = Data::getAll('date >= ? AND date <= ?', [$minDate, $maxDate]);
+        } elseif ($minDate !== "undefined") {
+            $result = Data::getAll('date >= ?', [$minDate]);
+        } elseif ($maxDate !== "undefined") {
+            $result = Data::getAll('date <= ?', [$maxDate]);
+        } else {
+            $result = Data::getAll();
+        }
+
+        if ($location !== "undefined") {
+            $result = $this->locationFilter($location, $result);
+        }
+
         return $this->json($result);
     }
 
@@ -35,14 +54,37 @@ class DataApiController extends AControllerBase
     {
         $req = $this->request();
         $user_id = $req->getValue('userId');
-        $result = Data::getAll('user = ?', [$user_id]);
+        $minDate = $req->getValue('minDate');
+        $maxDate = $req->getValue('maxDate');
+        $location = $req->getValue('location');
+
+        if ($minDate !== null && $maxDate !== null) {
+            $result = Data::getAll('user = ? AND date >= ? AND date <= ?', [$user_id, $minDate, $maxDate]);
+        } elseif ($minDate !== null) {
+            $result = Data::getAll('user = ? AND date >= ?', [$user_id, $minDate]);
+        } elseif ($maxDate !== null) {
+            $result = Data::getAll('user = ? AND date <= ?', [$user_id, $maxDate]);
+        } else {
+            $result = Data::getAll('user = ?', [$user_id]);
+        }
+
+        if ($location !== "undefined") {
+            $result = $this->locationFilter($location, $result);
+        }
+
         return $this->json($result);
     }
 
     public function getPrecipitation()
     {
         $req = $this->request();
-        $data = Data::getAll();
+        $minDate = $req->getValue('minDate');
+        $maxDate = $req->getValue('maxDate');
+        $location = $req->getValue('location');
+        $data = $this->getDateFilteredData($minDate, $maxDate);
+        if ($location !== "undefined") {
+            $data = $this->locationFilter($location, $data);
+        }
         $result = $this->getDataAttribute("precipitation", $data);
         return $this->json($result);
     }
@@ -50,7 +92,13 @@ class DataApiController extends AControllerBase
     public function getTemperature()
     {
         $req = $this->request();
-        $data = Data::getAll();
+        $minDate = $req->getValue('minDate');
+        $maxDate = $req->getValue('maxDate');
+        $location = $req->getValue('location');
+        $data = $this->getDateFilteredData($minDate, $maxDate);
+        if ($location !== "undefined") {
+            $data = $this->locationFilter($location, $data);
+        }
         $result = $this->getDataAttribute("temperature", $data);
         return $this->json($result);
     }
@@ -58,7 +106,13 @@ class DataApiController extends AControllerBase
     public function getHumidity()
     {
         $req = $this->request();
-        $data = Data::getAll();
+        $minDate = $req->getValue('minDate');
+        $maxDate = $req->getValue('maxDate');
+        $location = $req->getValue('location');
+        $data = $this->getDateFilteredData($minDate, $maxDate);
+        if ($location !== "undefined") {
+            $data = $this->locationFilter($location, $data);
+        }
         $result = $this->getDataAttribute("humidity", $data);
         return $this->json($result);
     }
@@ -66,7 +120,13 @@ class DataApiController extends AControllerBase
     public function getWindSpeed()
     {
         $req = $this->request();
-        $data = Data::getAll();
+        $minDate = $req->getValue('minDate');
+        $maxDate = $req->getValue('maxDate');
+        $location = $req->getValue('location');
+        $data = $this->getDateFilteredData($minDate, $maxDate);
+        if ($location !== "undefined") {
+            $data = $this->locationFilter($location, $data);
+        }
         $result = $this->getDataAttribute("wind_speed", $data);
         return $this->json($result);
     }
@@ -90,6 +150,36 @@ class DataApiController extends AControllerBase
                     break;
                 default:
                     break;
+            }
+        }
+        usort($result, function($a, $b) {
+            return $a["date"] <=> $b["date"];
+        });
+        return $result;
+    }
+
+    private function getDateFilteredData($minDate = "undefined", $maxDate = "undefined") {
+        $data = [];
+
+        if ($minDate !== "undefined" && $maxDate !== "undefined") {
+            $data = Data::getAll('date >= ? AND date <= ?', [$minDate, $maxDate]);
+        } elseif ($minDate !== "undefined") {
+            $data = Data::getAll('date >= ?', [$minDate]);
+        } elseif ($maxDate !== "undefined") {
+            $data = Data::getAll('date <= ?', [$maxDate]);
+        } else { //If both are "undefined"
+            $data = Data::getAll();
+        }
+
+        return $data;
+    }
+
+    private function locationFilter($location, $data)
+    {
+        $result = [];
+        foreach ($data as $datum) {
+            if ($location === $datum->getLocation()) {
+                $result[] = $datum;
             }
         }
         return $result;

@@ -39,7 +39,7 @@ $locations = Location::getAll();
         <input type="date" id="to-date" name="to-date">
 
         <br><br>
-        <input type="submit" value="Apply Filters">
+        <input type="button" id="applyFiltersButton" value="Apply Filters">
     </fieldset>
 </form>
 
@@ -62,5 +62,7 @@ $locations = Location::getAll();
 
 <h2>Precipitation</h2>
 <div id="precipitation_chart"></div>
+
+<div id="test"></div>
 
 <script src="/public/js/statsScript.js" type="module"></script>

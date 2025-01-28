@@ -66,6 +66,9 @@ class DataService {
     }
 
     toRequestArg(argKey, argValue) {
+        if (argValue == null || argValue == "") {
+            argValue = "undefined";
+        }
         return "&" + argKey + "=" + argValue;
     }
 }

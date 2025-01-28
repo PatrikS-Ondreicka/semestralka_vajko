@@ -43,8 +43,6 @@ if ($data && key_exists('weatherData', $data)){
 }
 ?>
 
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-
 <div id="errors">
     <?php
         if ($errors != null)
@@ -117,11 +115,6 @@ if ($data && key_exists('weatherData', $data)){
                     </div>
 
                     <div>
-                        <input type="radio" id="automatic" name="selection_mode" value="automatic">
-                        <label for="automatic">Automatic</label>
-                    </div>
-
-                    <div>
                         <input type="radio" id="map" name="selection_mode" value="map">
                         <label for="map">Map</label>
                     </div>
@@ -129,13 +122,13 @@ if ($data && key_exists('weatherData', $data)){
 
             </div>
             <div id="location_selection_content">
+                <div class="form-group col-12">
+                    <label for="loc_name" class="form-label">Name</label>
+                    <input type="text" id="loc_name" name="loc_name" class="form-control" value="<?= $loc_name ?>">
+                </div>
 
                 <!-- Manual selection content -->
                 <div id="man_selection_content" class="selection_content row" style="display:flex;">
-                    <div class="form-group col-12">
-                        <label for="lat" class="form-label">Name</label>
-                        <input type="text" id="loc_name" name="loc_name" class="form-control" value="<?= $loc_name ?>">
-                    </div>
                     <div class="form-group col-xl-6 col-12">
                         <label for="lat" class="form-label">Latitude</label>
                         <input type="number" id="lat" name="lat" class="form-control" step="0.0001" value="<?= $lat ?>" required>
@@ -146,14 +139,11 @@ if ($data && key_exists('weatherData', $data)){
                     </div>
                 </div>
 
-                <!-- Automatic selection content -->
-                <div id="auto_selection_content" class="selection_content" style="display:flex;">Auto</div>
-
                 <!-- Map selection content-->
-                <div id="map_selection_content" class="selection_content" style="display:flex;">
-                    <div id="map" style="width:600px; height:600px;">
-
-                    </div>
+                <div id="map_selection_content" class="selection_content" style="display:none;" onload="mapInit()">
+                    <input type="hidden" id="lat_mao" name="lat_map" value="">
+                    <input type="hidden" id="lon_map" name="lon_map" value="">
+                    <div id="map" style="width: 600px; height: 600px"></div>
                 </div>
             </div>
         </div>
@@ -164,15 +154,6 @@ if ($data && key_exists('weatherData', $data)){
     </div>
 </form>
 
-<script>
-    console.log(L);
-    let map = L.map('map');
-    map.setView([0, 0], 7);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-</script>
-
-
 <script src="../../../public/js/formCheck.js"></script>
 <script src="../../../public/js/locationSelectOptions.js"></script>
+

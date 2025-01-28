@@ -15,6 +15,11 @@ body
     color: #E6ECF0;
 }
 
+.card
+{
+    background-color: var(--neutral_2);
+}
+
 .nav-link
 {
     color:var(--primary);
@@ -117,6 +122,13 @@ body
     height: 1em;
     color: var(--primary);
     background-repeat: no-repeat;
+}
+
+.profile-image
+{
+    width: 10em;
+    height: 10em;
+    border-radius:50%;
 }
 
 /*For testing only*/

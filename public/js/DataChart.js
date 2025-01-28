@@ -1,5 +1,3 @@
-// import * as Plotly from 'https://cdn.plot.ly/plotly-2.35.2.min.js';
-
 class DataChart {
     chart;
     dataset;

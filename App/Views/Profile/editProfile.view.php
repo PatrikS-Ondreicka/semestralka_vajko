@@ -5,36 +5,39 @@
 $user_id = $data["user_id"];
 $username = $data['username'];
 $profile = $data['profile'];
-if (isset($data['errors']))
-{
-    $errors = $data["errors"];
-}
+$errors = $data['errors'] ?? [];
 
 ?>
 
-<h1>Edit Profile</h1>
-<form action="<?= $link->url("profile.editProfile", ['user_id' => $user_id])?>" method="post" enctype="multipart/form-data">
-    <fieldset>
-        <legend>Account Information</legend>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" value="<?= $username ?>" required><br><br>
-        <div id="edit errors">
-            <?php
-            if (isset($data['errors'])) {
-                foreach ($errors as $error) {
-                    echo $error;
-                }
-            }
-            ?>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1>Edit Profile</h1>
+            <form action="<?= $link->url("profile.editProfile", ['user_id' => $user_id])?>" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" id="username" name="username" value="<?= $username ?>" class="form-control" required>
+                            <?php if (isset($errors['username'])): ?>
+                                <span class="text-danger"><?= $errors['username'] ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea id="description" name="description" rows="4" class="form-control"><?= $profile->getDescription() ?></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile_pic" class="form-label">Profile Picture:</label>
+                            <input type="file" id="profile_pic" name="profile_pic" accept="image/*" class="form-control">
+                        </div>
+                        <img src="<?= $profile->getProfilePic() ?>" alt="Current Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </fieldset>
-    <fieldset>
-        <legend>Profile Information</legend>
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50"><?= $profile->getDescription() ?></textarea><br><br>
-        <label for="profile_pic">Profile Picture:</label><br>
-        <input type="file" id="profile_pic" name="profile_pic" accept="image/*"><br><br>
-        <img src="<?= $profile-> getProfilePic() ?>" alt="Current Profile Picture" width="150"><br>
-    </fieldset>
-    <input name='submit_profile' type="submit" value="Save Changes">
-</form>
+    </div>
+</div>
