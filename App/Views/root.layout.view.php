@@ -79,6 +79,32 @@ session_start();
                                         '<a class="nav-link" href="'.$dataform_link.'">Add data</a>'.
                                     '</li>';
                         }
+
+                        if ($auth->isLogged())
+                        {
+                            $admin_link = $link->url("adm.admin");
+                            $admin_loc_link = $link->url("adm.adminLocations");
+                            $admin_data_link = $link->url("adm.adminData");
+                            $admin_reports_link = $link->url("adm.adminReports");
+
+                            echo    '<li class="nav_item">'.
+                                        '<a class="nav-link" href="'.$admin_link.'">Admin</a>'.
+                                    '</li>';
+
+
+                            echo    '<li class="nav_item">'.
+                                        '<a class="nav-link" href="'.$admin_loc_link.'">Admin Locations</a>'.
+                                    '</li>';
+
+                            echo    '<li class="nav_item">'.
+                                        '<a class="nav-link" href="'.$admin_data_link.'">Admin Data</a>'.
+                                    '</li>';
+
+                            echo    '<li class="nav_item">'.
+                                        '<a class="nav-link" href="'.$admin_reports_link.'">Admin  Reports</a>'.
+                                    '</li>';
+
+                        }
                     ?>
                     <li class="nav_item">
                         <a class="nav-link" href=<?= $link->url("data.data") ?>>View data</a>

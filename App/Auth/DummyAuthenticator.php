@@ -13,7 +13,7 @@ class DummyAuthenticator implements IAuthenticator
 {
     public const LOGIN = "admin";
     public const PASSWORD_HASH = '$2y$10$GRA8D27bvZZw8b85CAwRee9NH5nj4CQA6PDFMc90pN9Wi4VAWq3yq'; // admin
-    public const USERNAME = "Admin";
+    public const USERNAME = "Adm";
 
     /**
      * DummyAuthenticator constructor

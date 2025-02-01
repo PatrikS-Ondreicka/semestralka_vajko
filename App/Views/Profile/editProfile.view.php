@@ -13,7 +13,7 @@ $errors = $data['errors'] ?? [];
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h1>Edit Profile</h1>
-            <form action="<?= $link->url("profile.editProfile", ['user_id' => $user_id])?>" method="post" enctype="multipart/form-data">
+            <form action="<?= $link->url("profile.editAction", ['user_id' => $user_id])?>" method="post" enctype="multipart/form-data">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
@@ -34,7 +34,7 @@ $errors = $data['errors'] ?? [];
                         <img src="<?= $profile->getProfilePic() ?>" alt="Current Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <input id="submit_profile" type="submit" class="btn btn-primary" value="Save Changes">
                     </div>
                 </div>
             </form>

@@ -54,7 +54,7 @@ body
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     background-color:var(--neutral_2);
     border-radius: 5px;
-    height: 200px;
+    height: 220px;
 }
 
 .local_weather_data_pair
