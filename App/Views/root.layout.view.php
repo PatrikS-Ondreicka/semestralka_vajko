@@ -23,9 +23,10 @@ session_start();
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
     <link href="../../public/css/index_style.css" rel="stylesheet">
-    <link href="../../public/css/table_style.css" rel="stylesheet">
+    <link href="../../public/css/data.css" rel="stylesheet">
     <link href="../../public/css/form_style.css" rel="stylesheet">
     <link href="../../public/css/profile.css" rel="stylesheet">
+    <link href="../../public/css/table.css" rel="stylesheet">
     <script src="../../public/js/script.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>

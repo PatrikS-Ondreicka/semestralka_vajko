@@ -3,7 +3,7 @@
 /** @var \App\Core\LinkGenerator $link */
 /** @var Array $data */
 /** @var \App\Core\IAuthenticator $auth */
-
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 use App\Models\User;
 
 $user_id = $data['user_id'];

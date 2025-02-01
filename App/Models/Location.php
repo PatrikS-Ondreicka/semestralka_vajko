@@ -50,4 +50,14 @@ class Location extends \App\Core\Model
     {
         $this->name = $name;
     }
+
+    public static function asValueKeyPairs(): array
+    {
+        $locations = Location::getAll();
+        $result = [];
+        foreach ($locations as $location) {
+            $result[$location->getId()] = $location->getName();
+        }
+        return $result;
+    }
 }

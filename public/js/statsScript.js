@@ -22,7 +22,7 @@ async function defaultCharts() {
 }
 
 async function clickEvent() {
-    const locationElement = document.getElementById('location-list');
+    const locationElement = document.getElementById('location');
     const valueTypeElement = document.getElementById('data-type');
     const fromDateElement = document.getElementById('from-date');
     const toDateElement = document.getElementById('to-date');

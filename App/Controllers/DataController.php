@@ -8,6 +8,7 @@ use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Core\Request;
 use App\Models\Location;
+use App\Models\ReportType;
 use \DateTime;
 use App\Models\Data;
 use function Sodium\add;
@@ -41,10 +42,11 @@ class DataController extends AControllerBase
     public function detail() : Response
     {
         $req = $this->request();
-        $id = $id = $req->getValue('dataId');
+        $id = $req->getValue('dataId');
         $data = Data::getOne($id);
         $location = Location::getOne($data->getLocation());
-        return $this->html(['weather_data' => $data, 'location' => $location]);
+        $report_types = ReportType::getAll();
+        return $this->html(['weather_data' => $data, 'location' => $location, 'report_types' => $report_types]);
     }
 
     public function uploadData() : Response

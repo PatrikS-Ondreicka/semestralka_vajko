@@ -1,0 +1,11 @@
+.admin_table {
+
+}
+
+.admin_table > tbody > tr > td {
+    background-color: var(--neutral_2);
+}
+
+.admin_table > thead > tr > th {
+    background-color: var(--primary);
+}

@@ -6,6 +6,7 @@ use App\Core\AControllerBase;
 use App\Core\DB\Connection;
 use App\Core\Responses\Response;
 use App\Models\Location;
+use App\Models\Data;
 use Exception;
 use PDO;
 
@@ -18,6 +19,37 @@ class LocationController extends AControllerBase
     public function index(): Response
     {
         // TODO: Implement index() method.
+    }
+
+    public function delete(): Response
+    {
+        $req = $this->request();
+        $location_id = $req->getValue("location_id");
+        $uses = count(Data::getAll("`location` = ?", [$location_id]));
+        if ($uses <= 0) {
+            $location = Location::getOne($location_id);
+            $location->delete();
+        }
+
+        return $this->redirect($this->url("adm.adminLocations"));
+    }
+
+    public function edit()
+    {
+        $req = $this->request();
+        $location_id = $req->getValue("location_id");
+        $location = Location::getOne($location_id);
+        if (!is_null($req->getValue("submit"))) {
+            $lat = $req->getValue("lat");
+            $lon = $req->getValue("lon");
+            $name = $req->getValue("name");
+            $location->setLat($lat);
+            $location->setLon($lon);
+            $location->setName($name);
+            $location->save();
+        }
+
+        return $this->html(["location" => $location]);
     }
 
     public static function locationExists(Location $location): bool

@@ -6,7 +6,9 @@ use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Location;
 use App\Models\Data;
+use App\Models\User;
 use App\Models\Report;
+use App\Models\ReportType;
 
 class AdmController extends AControllerBase
 {
@@ -26,16 +28,23 @@ class AdmController extends AControllerBase
 
     public function adminLocations(): Response
     {
-        return $this->html();
+        $locations = Location::getAll();
+        return $this->html(["locations" => $locations]);
     }
 
     public function adminData(): Response
     {
-        return $this->html();
+        $data = Data::getAll();
+        $usernames = User::asValueKeyPairs();
+        $locations = Location::asValueKeyPairs();
+        return $this->html(["data" => $data, "usernames" => $usernames, "locations" => $locations]);
     }
 
     public function adminReports(): Response
     {
-        return $this->html();
+        $reports = Report::getAll();
+        $usernames = User::asValueKeyPairs();
+        $types = ReportType::asValueKeyPairs();
+        return $this->html(["reports" => $reports, "usernames" => $usernames, "types" => $types]);
     }
 }

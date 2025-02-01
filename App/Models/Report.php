@@ -50,5 +50,4 @@ class Report extends Model
     {
         $this->reports_type = $reports_type;
     }
-
 }

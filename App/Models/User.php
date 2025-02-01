@@ -51,5 +51,14 @@ class User extends \App\Core\Model
         $this->role = $role;
     }
 
+    public static function asValueKeyPairs(): array
+    {
+        $users = User::getAll();
+        $result = [];
+        foreach ($users as $user) {
+            $result[$user->getId()] = $user->getUsername();
+        }
+        return $result;
+    }
 
 }

@@ -94,9 +94,9 @@ class DataApiController extends AControllerBase
         $req = $this->request();
         $minDate = $req->getValue('minDate');
         $maxDate = $req->getValue('maxDate');
-        $location = $req->getValue('location');
+        $location = (int)$req->getValue('location');
         $data = $this->getDateFilteredData($minDate, $maxDate);
-        if ($location !== "undefined") {
+        if ($location !== 0) {
             $data = $this->locationFilter($location, $data);
         }
         $result = $this->getDataAttribute("temperature", $data);
@@ -178,7 +178,7 @@ class DataApiController extends AControllerBase
     {
         $result = [];
         foreach ($data as $datum) {
-            if ($location === $datum->getLocation()) {
+            if ($location == $datum->getLocation()) {
                 $result[] = $datum;
             }
         }
