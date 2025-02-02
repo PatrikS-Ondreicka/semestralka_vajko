@@ -4,6 +4,7 @@
 /** @var \App\Core\IAuthenticator $auth */
 
 $folder = $data['folder'];
+$errors = $data['errors'];
 
 ?>
 
@@ -35,6 +36,11 @@ $folder = $data['folder'];
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Edit Folder</button>
             </form>
+        </div>
+        <div class="card-footer">
+            <?php foreach($errors as $error):?>
+                <p class="error_message"><?= $error; ?></p>
+            <?php endforeach;?>
         </div>
     </div>
 </div>

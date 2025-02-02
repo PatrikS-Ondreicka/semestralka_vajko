@@ -17,8 +17,10 @@ session_start();
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <h2 class="card-title">Weather Conditions</h2>
+                </div>
+                <div class="card-body">
                     <div class="data-item">
                         <span class="data-label">Date:</span>
                         <span id="date"><?= $weather_data->getDate() ?></span>
@@ -47,8 +49,9 @@ session_start();
                         <span class="data-label">Posted By:</span>
                         <span id="user"><?= (!is_null(User::getOne($weather_data->getUser()))) ? User::getOne($weather_data->getUser())->getUsername() : "unknown"?></span>
                     </div>
-                    <div>
-                        <?php if ($auth->isLogged() && $weather_data->getUser() != $auth->getLoggedUserId()): ?>
+                </div>
+                <div class="card-footer">
+                    <?php if ($auth->isLogged() && $weather_data->getUser() != $auth->getLoggedUserId()): ?>
                         <form action="<?= $link->url("report.add", ['user_id' => $auth->getLoggedUserId(), 'data_id' => $weather_data->getId()])?>" method="post">
                             <label for="report_type">Reason:</label>
                             <select id="report_type" name="report_type">
@@ -56,18 +59,19 @@ session_start();
                                     <option value="<?= $type->getId(); ?>"><?= $type->getDescription(); ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <input type="submit" value="Report">
+                            <input class="btn btn-primary" type="submit" value="Report">
                         </form>
-                        <?php endif; ?>
-                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <h2 class="card-title">Location</h2>
+                </div>
+                <div class="card-body">
                     <div class="location_item">
                         <span class="data-label">Name:</span>
                         <span id="location_name"><?= $location->getName() ?></span>

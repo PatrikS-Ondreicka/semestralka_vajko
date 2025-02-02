@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\AControllerBase;
 use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
+use App\Models\Data;
 use App\Models\Folder;
 use App\Models\InFolder;
 use App\Models\Profile;
@@ -12,6 +13,8 @@ use App\Models\User;
 
 class FolderController extends AControllerBase
 {
+
+    public array $supported_colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"];
 
     /**
      * @inheritDoc
@@ -40,6 +43,9 @@ class FolderController extends AControllerBase
                 $folder_id = $req->getValue('folder');
                 $folder = Folder::getOne($folder_id);
                 $logged_id = $auth->getLoggedUserId();
+                if ($folder == null) {
+                    return true;
+                }
                 return $folder->getOwner() == $logged_id;
             default:
                 return true;
@@ -55,38 +61,81 @@ class FolderController extends AControllerBase
         $color = $req->getValue('color');
         $owner = $this->app->getAuth()->getLoggedUserId();
 
-        $new_folder = new Folder();
-        $new_folder->setName($name);
-        $new_folder->setDescription($description);
-        $new_folder->setColor($color);
-        $new_folder->setOwner($owner);
+        $errors = [];
+        if ($name == null || $name == "")
+        {
+            $errors[] = "Folder name cannot be empty";
+        }
 
-        $new_folder->save();
-        return new RedirectResponse($this->url("profile.profileData", ['user_id' => $owner]));
+        if ($color == null || $color == "" || !in_array($color, $this->supported_colors))
+        {
+            $errors[] = "Unsupported color";
+        }
+
+        if (count($errors) == 0) {
+            $new_folder = new Folder();
+            $new_folder->setName($name);
+            $new_folder->setDescription($description);
+            $new_folder->setColor($color);
+            $new_folder->setOwner($owner);
+            $new_folder->save();
+        }
+
+        return new RedirectResponse($this->url("profile.profileData", ['user_id' => $owner, 'errors' => $errors]));
     }
 
     public function folderEdit() : Response
     {
         $req = $this->request();
+        $errors = $req->getValue('errors');
+        if ($errors == null)
+        {
+            $errors = [];
+        }
         $folder = Folder::getOne($req->getValue('folder'));
-        return $this->html(['folder' => $folder]);
+        if ($folder == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Unable to fetch folder"]));
+        }
+        return $this->html(['folder' => $folder, 'errors' => $errors]);
     }
 
     public function update() : Response
     {
         $req = $this->request();
-        $folder = Folder::getOne($req->getValue('folder'));
-        $folder->setName($req->getValue('name'));
-        $folder->setDescription($req->getValue('description'));
-        $folder->setColor($req->getValue('color'));
-        $folder->save();
-        return new RedirectResponse($this->url("folder.folderEdit", ['folder' => $folder->getId()]));
+        $folder_id = $req->getValue('folder');
+        $folder = Folder::getOne($folder_id);
+        $name = $req->getValue('name');
+        $description = $req->getValue('description');
+        $color = $req->getValue('color');
+
+        $errors = [];
+        if ($name == null || $name == "")
+        {
+            $errors[] = "Folder name cannot be empty";
+        }
+
+        if ($color == null || $color == "" || !in_array($color, $this->supported_colors))
+        {
+            $errors[] = "Unsupported color";
+        }
+
+        if (count($errors) == 0)
+        {
+            $folder->setName($name);
+            $folder->setDescription($description);
+            $folder->setColor($color);
+            $folder->save();
+        }
+        return new RedirectResponse($this->url("folder.folderEdit", ['folder' => $folder_id, 'errors' => $errors]));
     }
 
     public function delete() : Response
     {
         $req = $this->request();
         $folder = Folder::getOne($req->getValue('folder'));
+        if ($folder == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Unable to delete folder"]));
+        }
         $owner = $folder->getOwner();
         $folder->delete();
         return new RedirectResponse($this->url("profile.profileData", ['user_id' => $owner]));
@@ -98,6 +147,18 @@ class FolderController extends AControllerBase
         $req = $this->request();
         $folder_id = $req->getValue('folder');
         $data_id = $req->getValue('data_id');
+
+        if (Folder::getOne($folder_id) == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Folder doesn't exist"]));
+        }
+
+        if (Data::getOne($data_id) == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Data doesn't exist"]));
+        }
+
+        if (count(InFolder::getAll("`folder` = ? AND `data` = ?", [$folder_id, $data_id])) > 0) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Data is already placed in folder"]));
+        }
 
         $in_folder = new InFolder();
         $in_folder->setFolder($folder_id);
@@ -111,11 +172,32 @@ class FolderController extends AControllerBase
     public function remove() : Response
     {
         $req = $this->request();
-        $folder = $req->getValue('folder');
-        $data = $req->getValue('data');
-        $in_folder = InFolder::getAll("`folder` = ? AND `data` = ?", [$folder, $data])[0];
+        $folder_id = $req->getValue('folder');
+        $data_id = $req->getValue('data');
+
+        if (Folder::getOne($folder_id) == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Folder doesn't exist"]));
+        }
+
+        if (Data::getOne($data_id) == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Data doesn't exist"]));
+        }
+
+        $in_folder = InFolder::getAll("`folder` = ? AND `data` = ?", [$folder_id, $data_id])[0];
+
+        if ($in_folder == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Data isn't placed in folder"]));
+        }
         $in_folder->delete();
-        $folder_data = Folder::getOne($folder)->getAllFromFolder();
-        return new RedirectResponse($this->url("profile.profileFolder", ['folder_data' => $folder_data, 'folder' => $folder]));
+
+        $folder_data = Folder::getOne($folder_id)->getAllFromFolder();
+        return new RedirectResponse($this->url("profile.profileFolder", ['folder_data' => $folder_data, 'folder' => $folder_id]));
+    }
+
+    public function error()
+    {
+        $req = $this->request();
+        $message = $req->getValue('message');
+        return $this->html(["message" => $message]);
     }
 }

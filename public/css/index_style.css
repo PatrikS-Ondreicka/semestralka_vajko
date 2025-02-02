@@ -131,6 +131,15 @@ body
     border-radius:50%;
 }
 
+.error_header
+{
+    color: var(--error);
+}
+
+.error_message {
+    font-style: italic;
+    color: var(--error);
+}
 /*For testing only*/
 div
 {

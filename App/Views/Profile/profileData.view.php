@@ -6,12 +6,14 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 session_start();
 use App\Models\User;
 
+$user_id = $data['user_id'];
 $user_data = $data['user_data'];
 $folders = $data['folders'];
+$errors = $data['errors'];
 
 ?>
 <div>
-    <?php if ($auth->getLoggedUserId() == $user_data[0]->getUser()): ?>
+    <?php if ($auth->getLoggedUserId() == $user_id): ?>
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -40,6 +42,11 @@ $folders = $data['folders'];
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Create Folder</button>
                 </form>
+            </div>
+            <div class="card-footer">
+                <?php foreach($errors as $error):?>
+                <p class="error_message"><?= $error; ?></p>
+                <?php endforeach;?>
             </div>
         </div>
     </div>

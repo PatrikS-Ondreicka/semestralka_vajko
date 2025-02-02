@@ -5,7 +5,7 @@
 $user_id = $data["user_id"];
 $username = $data['username'];
 $profile = $data['profile'];
-$errors = $data['errors'] ?? [];
+$errors = $data['errors'];
 
 ?>
 
@@ -13,7 +13,7 @@ $errors = $data['errors'] ?? [];
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h1>Edit Profile</h1>
-            <form action="<?= $link->url("profile.editAction", ['user_id' => $user_id])?>" method="post" enctype="multipart/form-data">
+            <form action="<?= $link->url("profile.editProfile", ['user_id' => $user_id])?>" method="post" enctype="multipart/form-data">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
@@ -32,9 +32,10 @@ $errors = $data['errors'] ?? [];
                             <input type="file" id="profile_pic" name="profile_pic" accept="image/*" class="form-control">
                         </div>
                         <img src="<?= $profile->getProfilePic() ?>" alt="Current Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                        <input id="submit_profile" name="submit_profile" type="submit" class="btn btn-primary" value="Save Changes">
                     </div>
                     <div class="card-footer">
-                        <input id="submit_profile" type="submit" class="btn btn-primary" value="Save Changes">
+                        <p class="error_message"><?= $errors ?></p>
                     </div>
                 </div>
             </form>

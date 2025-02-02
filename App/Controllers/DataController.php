@@ -70,6 +70,10 @@ class DataController extends AControllerBase
         $req = $this->request();
         $id = $req->getValue('dataId');
         $data = Data::getOne($id);
+        if ($data == null)
+        {
+            return new RedirectResponse($this->url("data.error", ['message' => "Unable to fetch data with id ".$id]));
+        }
         $location = Location::getOne($data->getLocation());
         $report_types = ReportType::getAll();
         return $this->html(['weather_data' => $data, 'location' => $location, 'report_types' => $report_types]);
@@ -151,11 +155,23 @@ class DataController extends AControllerBase
     public function deleteData() : Response
     {
         $req = $this->request();
-        $data = Data::getOne($req->getValue('dataId'));
-
-        if (!is_null($data)) {
+        $data_id = $req->getValue('dataId');
+        $data = Data::getOne($data_id);
+        if (!is_null($data))
+        {
             $data->delete();
+            return new RedirectResponse($this->url("data.data"));
         }
-        return new RedirectResponse($this->url("data.data"));
+        else {
+            return new RedirectResponse($this->url("data.error", ['message' => "Unable to delete data with id ".$data_id]));
+        }
+
+    }
+
+    public function error()
+    {
+        $req = $this->request();
+        $message = $req->getValue('message');
+        return $this->html(["message" => $message]);
     }
 }
