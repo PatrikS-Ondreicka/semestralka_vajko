@@ -21,6 +21,16 @@ class AdmController extends AControllerBase
         // TODO: Implement index() method.
     }
 
+    public function authorize($action): bool
+    {
+        session_start();
+        $auth = $this->app->getAuth();
+        $req = $this->request();
+        $logged_id = $auth->getLoggedUserId();
+        $logged_user = User::getOne($logged_id);
+        return $logged_user->getRole() != 0;
+    }
+
     public function admin(): Response
     {
         return $this->html();

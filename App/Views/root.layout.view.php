@@ -4,7 +4,6 @@
 /** @var \App\Core\IAuthenticator $auth */
 /** @var \App\Core\LinkGenerator $link */
 
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="sk">

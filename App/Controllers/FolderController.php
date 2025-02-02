@@ -21,6 +21,31 @@ class FolderController extends AControllerBase
         // TODO: Implement index() method.
     }
 
+    public function authorize($action): bool
+    {
+        session_start();
+        $auth = $this->app->getAuth();
+        $req = $this->request();
+        switch ($action) {
+            case "create":
+                return $auth->isLogged();
+            case "folderEdit":
+            case "update":
+            case "delete":
+            case "place":
+            case "remove":
+                if (!$auth->isLogged()) {
+                    return false;
+                }
+                $folder_id = $req->getValue('folder');
+                $folder = Folder::getOne($folder_id);
+                $logged_id = $auth->getLoggedUserId();
+                return $folder->getOwner() == $logged_id;
+            default:
+                return true;
+        }
+    }
+
     public function create(): Response
     {
         session_start();

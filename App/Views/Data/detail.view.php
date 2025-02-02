@@ -48,7 +48,7 @@ session_start();
                         <span id="user"><?= (!is_null(User::getOne($weather_data->getUser()))) ? User::getOne($weather_data->getUser())->getUsername() : "unknown"?></span>
                     </div>
                     <div>
-                        <?php if ($weather_data->getUser() != $auth->getLoggedUserId()): ?>
+                        <?php if ($auth->isLogged() && $weather_data->getUser() != $auth->getLoggedUserId()): ?>
                         <form action="<?= $link->url("report.add", ['user_id' => $auth->getLoggedUserId(), 'data_id' => $weather_data->getId()])?>" method="post">
                             <label for="report_type">Reason:</label>
                             <select id="report_type" name="report_type">

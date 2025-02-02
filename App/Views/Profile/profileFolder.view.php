@@ -2,6 +2,8 @@
 /** @var \App\Core\LinkGenerator $link */
 /** @var Array $data */
 /** @var \App\Core\IAuthenticator $auth */
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+session_start();
 
 use App\Models\User;
 use App\Models\Folder;
@@ -15,8 +17,10 @@ $folder = $data['folder'];
         <div class="col-12 mb-3">
             <h2><?= $folder->getName() ?></h2>
             <p><?= $folder->getDescription() ?></p>
+            <?php if ($auth->getLoggedUserId() == $folder->getOwner()): ?>
             <a href="<?= $link->url('folder.folderEdit', ['folder' => $folder->getId()])?>" class="btn btn-primary">Edit Folder</a>
             <a href="<?= $link->url('folder.delete', ['folder' => $folder->getId()])?>" class="btn btn-danger">Delete Folder</a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -72,7 +76,9 @@ $folder = $data['folder'];
                 </div>
             </div>
             <div>
+                <?php if ($auth->getLoggedUserId() == $folder->getOwner()): ?>
                 <a href="<?= $link->url('folder.remove', ['folder' => $folder->getId(), 'data' => $weather_data->getId()]) ?>"  class="btn">Remove</a>
+                <?php endif ?>
                 <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Detail</a>
             </div>
         </div>

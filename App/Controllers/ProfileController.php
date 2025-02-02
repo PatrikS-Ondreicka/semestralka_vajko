@@ -24,6 +24,25 @@ class ProfileController extends AControllerBase
         // TODO: Implement index() method.
     }
 
+    public function authorize($action): bool
+    {
+        session_start();
+        $auth = $this->app->getAuth();
+        $req = $this->request();
+        switch ($action) {
+            case "editProfile":
+            case "editAction":
+                if (!$auth->isLogged()) {
+                    return false;
+                }
+                $logged_id = $auth->getLoggedUserId();
+                $profile_id = $req->getValue('user_id');
+                return $logged_id == $profile_id;
+            default:
+                return true;
+        }
+    }
+
     public function profile() : Response
     {
         $req = $this->request();

@@ -2,15 +2,16 @@
 /** @var \App\Core\LinkGenerator $link */
 /** @var Array $data */
 /** @var \App\Core\IAuthenticator $auth */
-
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+session_start();
 use App\Models\User;
-use App\Models\Folder;
 
 $user_data = $data['user_data'];
 $folders = $data['folders'];
 
 ?>
 <div>
+    <?php if ($auth->getLoggedUserId() == $user_data[0]->getUser()): ?>
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -43,6 +44,7 @@ $folders = $data['folders'];
         </div>
     </div>
 
+    <?php endif ?>
     <div class="mt-2">
         <?php foreach  ($folders as $folder):?>
             <div class="col-md-4 mb-4">
@@ -111,11 +113,14 @@ $folders = $data['folders'];
                     </div>
                 </div>
                 <div>
+                    <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Detail</a>
+                    <?php if ($auth->getLoggedUserId() == $weather_data->getUser()): ?>
                     <a href="<?= $link->url('data.deleteData', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Delete</a>
                     <a href="<?= $link->url('data.dataedit', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Edit</a>
-                    <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Detail</a>
+                    <?php endif; ?>
                 </div>
                 <div>
+                    <?php if ($auth->getLoggedUserId() == $weather_data->getUser()): ?>
                     <form action="<?= $link->url("folder.place", ['data_id' => $weather_data->getId()])?>" method="post" class="d-flex align-items-center">
                         <label for="folder" class="form-label me-2 mb-0">Folder:</label>
                         <select class="form-select form-select-sm" id="folder" name="folder">
@@ -125,9 +130,9 @@ $folders = $data['folders'];
                         </select>
                         <button type="submit" class="btn btn-primary btn-sm ms-2">Add</button>
                     </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     <?php endforeach; ?>
-    <p>No content has been created yet.</p>
 </div>

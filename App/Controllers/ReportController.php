@@ -6,6 +6,7 @@ use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\ReportType;
 use App\Models\Report;
+use App\Models\User;
 
 class ReportController extends AControllerBase
 {
@@ -16,6 +17,26 @@ class ReportController extends AControllerBase
     public function index(): Response
     {
         // TODO: Implement index() method.
+    }
+
+    public function authorize($action): bool
+    {
+        session_start();
+        $auth = $this->app->getAuth();
+        $req = $this->request();
+        switch ($action) {
+            case "add":
+                return $auth->isLogged();
+            case "delete":
+                if (!$auth->isLogged()) {
+                    return false;
+                }
+                $logged_id = $auth->getLoggedUserId();
+                $logged_user = User::getOne($logged_id);
+                return $logged_user->getRole() != 0;
+            default:
+                return true;
+        }
     }
 
     public function add() : Response

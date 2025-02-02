@@ -23,6 +23,32 @@ class DataController extends AControllerBase
         // TODO: Implement index() method.
     }
 
+    public function authorize($action): bool
+    {
+        session_start();
+        $auth = $this->app->getAuth();
+        $req = $this->request();
+        switch ($action) {
+            case "dataform":
+                return $auth->isLogged();
+            case "dataedit":
+            case "uploadData":
+            case "deleteData":
+                if (!$auth->isLogged()) {
+                    return false;
+                }
+                $data_id = $req->getValue('dataId');
+                $data = Data::getOne($data_id);
+                if ($data != null && $data->getUser() != null) {
+                $logged_id = $auth->getLoggedUserId();
+                    return $data->getUser() == $logged_id;
+                }
+                return true;
+            default:
+                return true;
+        }
+    }
+
 
     public function data() : Response
     {
