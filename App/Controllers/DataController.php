@@ -8,6 +8,7 @@ use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Core\Request;
 use App\Models\Location;
+use App\Models\Profile;
 use App\Models\ReportType;
 use \DateTime;
 use App\Models\Data;
@@ -57,7 +58,10 @@ class DataController extends AControllerBase
 
     public function dataform() : Response
     {
-        return $this->html();
+        $req = $this->request();
+        $weather_data = $req->getValue('weatherData');
+        $errors = $req->getValue('errors');
+        return $this->html(['weatherData' => $weather_data, 'errors' => $errors]);
     }
 
     public function statistics() : Response
@@ -70,13 +74,15 @@ class DataController extends AControllerBase
         $req = $this->request();
         $id = $req->getValue('dataId');
         $data = Data::getOne($id);
+        $profiles = Profile::getAll("`user` = ?", [$data->getUser()]);
+        $profile = count($profiles) > 0 ? $profiles[0] : null;
         if ($data == null)
         {
             return new RedirectResponse($this->url("data.error", ['message' => "Unable to fetch data with id ".$id]));
         }
         $location = Location::getOne($data->getLocation());
         $report_types = ReportType::getAll();
-        return $this->html(['weather_data' => $data, 'location' => $location, 'report_types' => $report_types]);
+        return $this->html(['weather_data' => $data, 'location' => $location, 'report_types' => $report_types, 'profile' => $profile]);
     }
 
     public function uploadData() : Response
@@ -123,17 +129,38 @@ class DataController extends AControllerBase
             $errors[] = "Value of precipitation must be greater or equal to 0";
         }
 
-        // Setting of a location
-        $loc = new Location();
-        $loc->setLat($req->getValue('lat'));
-        $loc->setLon($req->getValue('lon'));
-        $loc->setName($req->getValue('loc_name'));
-        if (!LocationController::locationExists($loc)) {
-            $loc->save();
+        $selection_mode = $req->getValue("selection_mode");
+        if ($selection_mode != "manual" && $selection_mode != "map") {
+            $errors[] = "Selection mode is incorrect";
         }
-        $loc_id = LocationController::selectLocation($loc)->getId();
-        $data->setLocation($loc_id);
 
+        $lat = $req->getValue('lat');
+        $lon = $req->getValue('lon');
+        $lat = floatval(sprintf("%.4f", $lat));
+        $lon = floatval(sprintf("%.4f", $lon));
+        $loc_name = $req->getValue('loc_name');
+
+        if ($lat == null || $lon == null) {
+            $errors[] = "Location coordinates missing";
+        }
+
+        if (count(Location::getAll("`name` = ? AND (TRIM(lon) != ? || TRIM(lat) != ?)", [$loc_name, $lon, $lat])) > 0) {
+            $errors[] = "Location name already exists";
+        }
+
+        $locations = Location::getAll("`name` = ? AND (TRIM(lon) = ? AND TRIM(lat) = ?)",  [$loc_name, $lon, $lat]);
+        $location = null;
+        if (count($locations) > 0) {
+            $location = $locations[0];
+        } else {
+            $location = new Location();
+            $location->setName(trim($loc_name));
+            $location->setLat($lat);
+            $location->setLon($lon);
+            $location->save();
+        }
+
+        $data->setLocation($location->getId());
         if (!$errors) {
             $data->save();
             return new RedirectResponse($this->url("data.data"));

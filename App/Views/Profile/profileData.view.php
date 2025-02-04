@@ -5,6 +5,7 @@
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 session_start();
 use App\Models\User;
+use App\Models\InFolder;
 
 $user_id = $data['user_id'];
 $user_data = $data['user_data'];
@@ -132,7 +133,9 @@ $errors = $data['errors'];
                         <label for="folder" class="form-label me-2 mb-0">Folder:</label>
                         <select class="form-select form-select-sm" id="folder" name="folder">
                             <?php foreach  ($folders as $folder):?>
-                                <option value="<?= $folder->getId(); ?>"><?= $folder->getName(); ?></option>
+                                <?php if (!InFolder::exists($folder->getId(), $weather_data->getId())):?>
+                                    <option value="<?= $folder->getId(); ?>"><?= $folder->getName(); ?></option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                         <button type="submit" class="btn btn-primary btn-sm ms-2">Add</button>

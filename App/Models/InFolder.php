@@ -46,4 +46,9 @@ class InFolder extends Model
         return "in_folder";
     }
 
+    public static function exists(?int $folder, ?int $data) : bool
+    {
+        $fetched = InFolder::getAll("`folder` = ? and `data` = ?", [$folder, $data]);
+        return count($fetched) > 0;
+    }
 }

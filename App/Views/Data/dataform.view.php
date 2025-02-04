@@ -17,8 +17,7 @@ $lon = "";
 $loc_name = "";
 $errors = null;
 
-if ($data && key_exists('errors', $data))
-{
+if ($data && key_exists('errors', $data)) {
     $errors = $data['errors'];
 }
 
@@ -34,7 +33,6 @@ if ($data && key_exists('weatherData', $data)){
         $ws = $weatherData->getWindSpeed();
         $wd = $weatherData->getWindDirection();
         $precip = $weatherData->getPrecipitation();
-
         $loc = Location::getOne($weatherData->getLocation());
         $lat = $loc->getLat();
         $lon = $loc->getLon();
@@ -42,17 +40,13 @@ if ($data && key_exists('weatherData', $data)){
     }
 }
 ?>
-
+<?php if ($errors):?>
 <div id="errors">
-    <?php
-        if ($errors != null)
-        {
-            foreach ($errors as $error) {
-                echo '<div class="text-danger">'.$error.'</div>';
-            }
-        }
-    ?>
+<?php foreach ($errors as $error):?>
+    <p class="error_message"><?= $error ?></p>
+<?php endforeach; ?>
 </div>
+<?php endif; ?>
 <form id="dataForm" action="<?= $link->url("Data.uploadData", ['dataId' => $id])?>" method="post" onsubmit="return formCheck()">
     <div class="container add_data_form_container col-md-9 col-sm-12">
 
@@ -110,12 +104,12 @@ if ($data && key_exists('weatherData', $data)){
                 <br>
                 <div class="row">
                     <div>
-                        <input type="radio" id="manual" name="selection_mode" value="manual" checked>
+                        <input type="radio" name="selection_mode" value="manual" checked>
                         <label for="manual">Manual</label>
                     </div>
 
                     <div>
-                        <input type="radio" id="map" name="selection_mode" value="map">
+                        <input type="radio" name="selection_mode" value="map">
                         <label for="map">Map</label>
                     </div>
                 </div>
@@ -141,7 +135,7 @@ if ($data && key_exists('weatherData', $data)){
 
                 <!-- Map selection content-->
                 <div id="map_selection_content" class="selection_content" style="display:none;" onload="mapInit()">
-                    <input type="hidden" id="lat_mao" name="lat_map" value="">
+                    <input type="hidden" id="lat_map" name="lat_map" value="">
                     <input type="hidden" id="lon_map" name="lon_map" value="">
                     <div id="map" style="width: 600px; height: 600px"></div>
                 </div>
@@ -155,5 +149,5 @@ if ($data && key_exists('weatherData', $data)){
 </form>
 
 <script src="../../../public/js/formCheck.js"></script>
-<script src="../../../public/js/locationSelectOptions.js"></script>
+<script type="module" src="/public/js/locationSelectOptions.js"></script>
 

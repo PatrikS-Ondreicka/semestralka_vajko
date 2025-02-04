@@ -2,12 +2,15 @@
 /** @var Array $data */
 /** @var \App\Core\LinkGenerator $link */
 /** @var \App\Core\IAuthenticator $auth */
+
+use App\Models\Profile;
 use App\Models\User;
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 $weather_data = $data['weather_data'];
 $location = $data['location'];
 $report_types = $data['report_types'];
+$profile = $data['profile'];
 session_start();
 ?>
 
@@ -19,6 +22,14 @@ session_start();
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">Weather Conditions</h2>
+                    <div>
+                        <a id="profile_link" href=<?= $link->url("profile.profile", ['id' => $weather_data->getUser()]); ?>>
+                            <div id="profile_link_content" class="d-flex align-items-center mt-2">
+                                <img class="rounded-circle prof_pic_sm me-2" src="<?= $profile != null ? $profile->getProfilePic(): null; ?>" alt="Profile Picture" width="20" height="20">
+                                <span id="user"><?= (!is_null(User::getOne($weather_data->getUser()))) ? User::getOne($weather_data->getUser())->getUsername() : "unknown"?></span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="data-item">

@@ -67,6 +67,12 @@ class FolderController extends AControllerBase
             $errors[] = "Folder name cannot be empty";
         }
 
+        $folders_with_name = Folder::getAll("`name` = ? AND `owner` = ?", [$name, $owner]);
+        if (count($folders_with_name) > 0)
+        {
+            $errors[] = "Folder with such name already exists";
+        }
+
         if ($color == null || $color == "" || !in_array($color, $this->supported_colors))
         {
             $errors[] = "Unsupported color";
