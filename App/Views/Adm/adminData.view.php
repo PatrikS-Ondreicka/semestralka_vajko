@@ -27,7 +27,7 @@ $locations = $data["locations"];
         <td><?= $datum->getDate(); ?></td>
         <td><?= $locations[$datum->getLocation()]; ?></td>
         <td>
-            <button class="btn btn-danger btn-sm">Delete</button>
+            <a href="<?= $link->url("data.adminDelete", ["dataId" => $datum->getId()])?>" class="btn btn-danger btn-sm">Delete</a>
         </td>
     <tr>
         <?php endforeach; ?>

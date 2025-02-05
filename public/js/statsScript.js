@@ -34,19 +34,19 @@ async function clickEvent() {
 
     const dataAPI = new DataAPI();
 
-    const tempData = await dataAPI.getTemperature(fromDate, toDate, location);
+    const tempData = await dataAPI.getTemperature(fromDate, toDate, location, valueType);
     let tempChart = new DataChart(tempData, "temperature_chart", "Temperature", 'rgb(215,68,68)');
     tempChart.createChart();
 
-    const humData = await dataAPI.getHumidity(fromDate, toDate, location);
+    const humData = await dataAPI.getHumidity(fromDate, toDate, location, valueType);
     let humChart = new DataChart(humData, "humidity_chart", "Humidity", 'rgb(75,85,192)');
     humChart.createChart();
 
-    const wsData = await dataAPI.getWindSpeed(fromDate, toDate, location);
+    const wsData = await dataAPI.getWindSpeed(fromDate, toDate, location, valueType);
     let wsChart = new DataChart(wsData, "wind_speed_chart", "Wind Speed", 'rgb(192,169,75)');
     wsChart.createChart();
 
-    const precData = await dataAPI.getPrecipitation(fromDate, toDate, location);
+    const precData = await dataAPI.getPrecipitation(fromDate, toDate, location, valueType);
     let precChart = new DataChart(precData, "precipitation_chart", "Precipitation", 'rgb(184,75,192)');
     precChart.createChart();
 }

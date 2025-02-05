@@ -8,6 +8,7 @@ use App\Core\Responses\Response;
 use App\Models\Data;
 use App\Models\Folder;
 use App\Models\InFolder;
+use App\Models\Location;
 use App\Models\Profile;
 use App\Models\User;
 
@@ -198,6 +199,29 @@ class FolderController extends AControllerBase
 
         $folder_data = Folder::getOne($folder_id)->getAllFromFolder();
         return new RedirectResponse($this->url("profile.profileFolder", ['folder_data' => $folder_data, 'folder' => $folder_id]));
+    }
+
+    public function exportAsCSV() {
+        $req = $this->request();
+        $folder_id = $req->getValue('folder');
+        $folder = Folder::getOne($folder_id);
+        if ($folder == null) {
+            return new RedirectResponse($this->url("folder.error", ['message' => "Folder doesn't exist"]));
+        }
+        $filename = $folder->getName()."-export.csv";
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $data = $folder->getAllFromFolder();
+        $output = fopen('php://output', 'w');
+        $header = array("id", "temperature", "humidity", "wind_speed", "wind_direction", "precipitation", "loc_name", "lat", "lon");
+        fputcsv($output, $header);
+        foreach ($data as $row) {
+            $location = Location::getOne($row->getLocation());
+            $row_formated = array($row->getId(), $row->getHumidity(), $row->getWindSpeed(), $row->getWindDirection(), $row->getPrecipitation(), $location->getName(), $location->getLat(), $location->getLon());
+            fputcsv($output, $row_formated);
+        }
+        fclose($output);
+        exit();
     }
 
     public function error()

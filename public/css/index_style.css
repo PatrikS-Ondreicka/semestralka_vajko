@@ -30,31 +30,9 @@ body
     color:var(--tertiary);
 }
 
-.local_weather_block
+.menu-bar
 {
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     background-color:var(--neutral_2);
-    border-radius: 5px;
-    padding: 1em;
-}
-
-.local_weather_block h3
-{
-    color:var(--primary);
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-
-.menu_sidebar
-{
-    max-width: 500px;
-    padding-left: 20px;
-    /*Tento pekny tien mam z tadeto: https://getcssscan.com/css-box-shadow-examples*/
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    background-color:var(--neutral_2);
-    border-radius: 5px;
-    height: 220px;
 }
 
 .local_weather_data_pair

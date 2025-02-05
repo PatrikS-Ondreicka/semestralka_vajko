@@ -18,9 +18,10 @@ $folder = $data['folder'];
             <h2><?= $folder->getName() ?></h2>
             <p><?= $folder->getDescription() ?></p>
             <?php if ($auth->getLoggedUserId() == $folder->getOwner()): ?>
-            <a href="<?= $link->url('folder.folderEdit', ['folder' => $folder->getId()])?>" class="btn btn-primary">Edit Folder</a>
-            <a href="<?= $link->url('folder.delete', ['folder' => $folder->getId()])?>" class="btn btn-danger">Delete Folder</a>
+                <a href="<?= $link->url('folder.folderEdit', ['folder' => $folder->getId()])?>" class="btn btn-primary">Edit Folder</a>
+                <a href="<?= $link->url('folder.delete', ['folder' => $folder->getId()])?>" class="btn btn-danger">Delete Folder</a>
             <?php endif; ?>
+                <a href="<?= $link->url('folder.exportAsCSV', ['folder' => $folder->getId()])?>" class="btn btn-light">Export as CSV</a>
         </div>
     </div>
 

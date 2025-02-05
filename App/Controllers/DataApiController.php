@@ -81,11 +81,13 @@ class DataApiController extends AControllerBase
         $minDate = $req->getValue('minDate');
         $maxDate = $req->getValue('maxDate');
         $location = $req->getValue('location');
+        $type = $req->getValue('type');
         $data = $this->getDateFilteredData($minDate, $maxDate);
         if ($location !== "undefined") {
             $data = $this->locationFilter($location, $data);
         }
         $result = $this->getDataAttribute("precipitation", $data);
+        $result = $this->typeFilter($type, $result);
         return $this->json($result);
     }
 
@@ -95,11 +97,13 @@ class DataApiController extends AControllerBase
         $minDate = $req->getValue('minDate');
         $maxDate = $req->getValue('maxDate');
         $location = (int)$req->getValue('location');
+        $type = $req->getValue('type');
         $data = $this->getDateFilteredData($minDate, $maxDate);
         if ($location !== 0) {
             $data = $this->locationFilter($location, $data);
         }
         $result = $this->getDataAttribute("temperature", $data);
+        $result = $this->typeFilter($type, $result);
         return $this->json($result);
     }
 
@@ -109,11 +113,13 @@ class DataApiController extends AControllerBase
         $minDate = $req->getValue('minDate');
         $maxDate = $req->getValue('maxDate');
         $location = $req->getValue('location');
+        $type = $req->getValue('type');
         $data = $this->getDateFilteredData($minDate, $maxDate);
         if ($location !== "undefined") {
             $data = $this->locationFilter($location, $data);
         }
         $result = $this->getDataAttribute("humidity", $data);
+        $result = $this->typeFilter($type, $result);
         return $this->json($result);
     }
 
@@ -123,11 +129,13 @@ class DataApiController extends AControllerBase
         $minDate = $req->getValue('minDate');
         $maxDate = $req->getValue('maxDate');
         $location = $req->getValue('location');
+        $type = $req->getValue('type');
         $data = $this->getDateFilteredData($minDate, $maxDate);
         if ($location !== "undefined") {
             $data = $this->locationFilter($location, $data);
         }
         $result = $this->getDataAttribute("wind_speed", $data);
+        $result = $this->typeFilter($type, $result);
         return $this->json($result);
     }
 
@@ -180,6 +188,65 @@ class DataApiController extends AControllerBase
         foreach ($data as $datum) {
             if ($location == $datum->getLocation()) {
                 $result[] = $datum;
+            }
+        }
+        return $result;
+    }
+
+    private function typeFilter($type, $data_pairs)
+    {
+        $result = [];
+            switch ($type) {
+                case "min":
+                    return $this->filterMin($data_pairs);
+                case "max":
+                    return $this->filterMax($data_pairs);
+                default:
+                    return $data_pairs;
+            }
+    }
+
+    private function filterMin($data_pairs) {
+        $current_date = null;
+        $current_min = 100;
+        $result = [];
+        foreach ($data_pairs as $pair) {
+            $date = $pair["date"];
+            $value = $pair["value"];
+            if (explode(" ", $date)[0] != $current_date) {
+                if ($current_min == 100) {
+                    $current_min = $pair["value"];
+                }
+                $result[] = ["value" => $current_min, "date" => $date];
+                $current_date = explode(" ", $date)[0];
+                $current_min = $pair["value"];
+            } else {
+                if ($current_min > $value) {
+                    $current_min = $value;
+                }
+            }
+        }
+        return $result;
+    }
+
+    private function filterMax($data_pairs) {
+        $current_date = null;
+        $current_max = -100;
+        $result = [];
+        foreach ($data_pairs as $pair) {
+            $date = $pair["date"];
+            $value = $pair["value"];
+            if (explode(" ", $date)[0] != $current_date) {
+                if ($current_max == -100) {
+                    $current_max = $pair["value"];
+                }
+                $result[] = ["value" => $current_max, "date" => $date];
+                $current_date = explode(" ", $date)[0];
+                $current_max = $pair["value"];
+            } else {
+                if ($current_max < $value) {
+                    $current_max = $value;
+                }
             }
         }
         return $result;

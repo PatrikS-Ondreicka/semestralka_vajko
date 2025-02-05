@@ -33,36 +33,36 @@ class DataAPI extends DataService {
             []);
     }
 
-    async getPrecipitation(minDate, maxDate, location){
+    async getPrecipitation(minDate, maxDate, location, type){
         return await this.sendRequest(
-            "getPrecipitation" + this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
+            "getPrecipitation" + this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location) + this.toRequestArg('type', type),
             "POST",
             200,
             null,
             []);
     }
 
-    async getTemperature(minDate, maxDate, location){
+    async getTemperature(minDate, maxDate, location, type){
         return await this.sendRequest(
-            "getTemperature" + this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
+            "getTemperature" + this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location) + this.toRequestArg('type', type),
             "POST",
             200,
             null,
             []);
     }
 
-    async getHumidity(minDate, maxDate, location){
+    async getHumidity(minDate, maxDate, location, type){
         return await this.sendRequest(
-            "getHumidity"+ this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
+            "getHumidity"+ this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location) + this.toRequestArg('type', type),
             "POST",
             200,
             null,
             []);
     }
 
-    async getWindSpeed(minDate, maxDate, location){
+    async getWindSpeed(minDate, maxDate, location, type){
         return await this.sendRequest(
-            "getWindSpeed"+ this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location),
+            "getWindSpeed"+ this.toRequestArg('minDate', minDate) + this.toRequestArg('maxDate', maxDate) + this.toRequestArg('location', location) + this.toRequestArg('type', type),
             "POST",
             200,
             null,

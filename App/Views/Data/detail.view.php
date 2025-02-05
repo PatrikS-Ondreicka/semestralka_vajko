@@ -15,8 +15,6 @@ session_start();
 ?>
 
 <div class="container">
-    <h1 class="text-center mb-4">Weather Data Details</h1>
-
     <div class="row">
         <div class="col-md-6">
             <div class="card">

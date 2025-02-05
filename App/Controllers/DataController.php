@@ -10,6 +10,7 @@ use App\Core\Request;
 use App\Models\Location;
 use App\Models\Profile;
 use App\Models\ReportType;
+use App\Models\User;
 use \DateTime;
 use App\Models\Data;
 use function Sodium\add;
@@ -34,7 +35,6 @@ class DataController extends AControllerBase
                 return $auth->isLogged();
             case "dataedit":
             case "uploadData":
-            case "deleteData":
                 if (!$auth->isLogged()) {
                     return false;
                 }
@@ -45,6 +45,17 @@ class DataController extends AControllerBase
                     return $data->getUser() == $logged_id;
                 }
                 return true;
+            case "deleteData":
+            case "adminDelete":
+                if (!$auth->isLogged()) {
+                    return false;
+                }
+                $data_id = $req->getValue('dataId');
+                $data = Data::getOne($data_id);
+                if ($data != null && $data->getUser() != null) {
+                    $logged_id = $auth->getLoggedUserId();
+                    return $data->getUser() == $logged_id || User::getOne($logged_id)->getRole() > 0;
+                }
             default:
                 return true;
         }
@@ -193,6 +204,21 @@ class DataController extends AControllerBase
             return new RedirectResponse($this->url("data.error", ['message' => "Unable to delete data with id ".$data_id]));
         }
 
+    }
+
+    public function adminDelete() : Response
+    {
+        $req = $this->request();
+        $data_id = $req->getValue('dataId');
+        $data = Data::getOne($data_id);
+        if (!is_null($data))
+        {
+            $data->delete();
+            return new RedirectResponse($this->url("adm.adminData"));
+        }
+        else {
+            return new RedirectResponse($this->url("data.error", ['message' => "Unable to delete data with id ".$data_id]));
+        }
     }
 
     public function error()

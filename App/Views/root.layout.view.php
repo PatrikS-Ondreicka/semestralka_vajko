@@ -29,10 +29,13 @@ use App\Models\User;
 
 <body>
 <div class="site_wrapper container">
-    <div class="row">
-        <h1>Weather site</h1>
-        <div class="menu_sidebar container col-12 col-lg-2 mb-1 mb-lg-0">
-            <div id="user_info">
+        <!-- Menu -->
+        <nav class="navbar navbar-expand-lg navbar-custom-bg menu-bar">  <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                     Weather Site
+                </a>
+
+                <div id="user_info">
                     <?php if ($auth->isLogged()) :
                         $username = $auth->getLoggedUserName();
                         $profile_link = $link->url("profile.profile", ['id' => $auth->getLoggedUserId()]);
@@ -43,85 +46,68 @@ use App\Models\User;
                                 <span><?= $username ?></span>
                             </div>
                         </a>
-                        <a class="text-danger align-content-center" href=<?= $logout_link ?>>Logout</a>
                     <?php endif; ?>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <?php if ($auth->isLogged()) :?>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href=<?= $logout_link ?>>Logout</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!$auth->isLogged()) :
+                            $log_link = $link->url("auth.login");
+                            $rag_link = $link->url("auth.register"); ?>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $log_link ?>>Login</a>
+                            </li>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $rag_link ?>>Registration</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if ($auth->isLogged()) :
+                            $dataform_link = $link->url("data.dataform"); ?>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $dataform_link ?>>Add data</a>
+                            </li>
+                        <?php endif; ?>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $link->url("data.data") ?>>View data</a>
+                            </li>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $link->url("data.statistics") ?>>Statistics</a>
+                            </li>
+                        <?php if ($auth->isLogged() && User::getOne($auth->getLoggedUserId())->getRole() != 0) :
+                            $admin_loc_link = $link->url("adm.adminLocations");
+                            $admin_data_link = $link->url("adm.adminData");
+                            $admin_reports_link = $link->url("adm.adminReports"); ?>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $admin_loc_link ?>>Admin Locations</a>
+                            </li>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $admin_data_link ?>>Admin Data</a>
+                            </li>
+                            <li class="nav_item">
+                                <a class="nav-link" href=<?= $admin_reports_link ?>>Admin Reports</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
-            <nav class="site_menu navbar">
-                <ul class="navbar-nav">
-                    <?php if (!$auth->isLogged()) :
-                        $log_link = $link->url("auth.login");
-                        $rag_link = $link->url("auth.register"); ?>
-                        <li class="nav_item">
-                            <a class="nav-link" href=<?= $log_link ?>>Login</a>
-                        </li>
-                        <li class="nav_item">
-                            <a class="nav-link" href=<?= $rag_link ?>>Registration</a>
-                        </li>
-                    <?php endif; ?>
+        </nav>
+        <!-- End Menu -->
 
-                    <?php if ($auth->isLogged()) :
-                        $dataform_link = $link->url("data.dataform"); ?>
-                        <li class="nav_item">
-                            <a class="nav-link" href=<?= $dataform_link ?>>Add data</a>
-                        </li>
-                    <?php endif; ?>
-                    <li class="nav_item">
-                        <a class="nav-link" href=<?= $link->url("data.data") ?>>View data</a>
-                    </li>
-                    <li class="nav_item">
-                        <a class="nav-link" href=<?= $link->url("data.statistics") ?>>Statistics</a>
-                    </li>
-                </ul>
-            </nav>
-                    <?php if ($auth->isLogged() && User::getOne($auth->getLoggedUserId())->getRole() != 0) :
-                        $admin_loc_link = $link->url("adm.adminLocations");
-                        $admin_data_link = $link->url("adm.adminData");
-                        $admin_reports_link = $link->url("adm.adminReports"); ?>
-                        <li class="nav_item">
-                            <a class="nav-link" href=<?= $admin_loc_link ?>>Admin Locations</a>
-                        </li>
-                        <li class="nav_item">
-                            <a class="nav-link" href=<?= $admin_data_link ?>>Admin Data</a>
-                        </li>
-                        <li class="nav_item">
-                            <a class="nav-link" href=<?= $admin_reports_link ?>>Admin Reports</a>
-                        </li>
-                    <?php endif; ?>
-        </div>
-
-        <div class="site_content col-12 col-lg-8 mb-1">
+        <!-- Content -->
+        <div class="site_content container col-12 col-lg-8 mt-2">
             <?= $contentHTML ?>
         </div>
-
-        <div class="right_sidebar container col-12 col-lg-2">
-            <div class="local_weather_block">
-                <div class="local_weather_header">
-                    <h3>Weather in area</h3>
-                </div>
-                <div class="local_weather_data">
-                    <div class="local_weather_data_pair">
-                        <div class="temp_icon_bg value_icon"></div>
-                        <div class="local_weather_data_value">5.4 °C</div>
-                    </div>
-                    <div class="local_weather_data_pair">
-                        <div class="hum_icon_bg value_icon"></div>
-                        <div class="local_weather_data_value">15 %</div>
-                    </div>
-                    <div class="local_weather_data_pair">
-                        <div class="wind_icon_bg value_icon"></div>
-                        <div class="local_weather_data_value">4 km/h</div>
-                    </div>
-                    <div class="local_weather_data_pair">
-                        <div class="wind_arr_icon_bg value_icon"></div>
-                        <div class="local_weather_data_value">SW</div>
-                    </div>
-                    <div class="local_weather_data_pair">
-                        <div class="precip_icon_bg value_icon"></div>
-                        <div class="local_weather_data_value">0 mm</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- End Content -->
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

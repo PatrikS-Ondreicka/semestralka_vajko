@@ -7,62 +7,72 @@ use App\Models\Location;
 $locations = Location::getAll();
 ?>
 
-<h1>Weather Statistics</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Filters</h2>
+        </div>
+        <div class="card-body">  <form>
+                <div class="form-group">  <label for="location">Location:</label>
+                    <input type="text" class="form-control" id="location" name="location" list="location-list">
+                    <datalist id="location-list">
+                        <?php foreach ($locations as $loc): ?>
+                            <option value="<?= $loc->getId(); ?>"><?= $loc->getName(); ?></option>
+                        <?php endforeach; ?>
+                    </datalist>
+                </div>
 
-<form>
-    <fieldset>
-        <legend>Filters</legend>
+                <div class="form-group">  <label for="data-type">Data Type:</label>
+                    <select class="form-control" id="data-type" name="data-type">
+                        <option value="values">Values</option>
+                        <option value="min">Minimum</option>
+                        <option value="max">Maximum</option>
+                    </select>
+                </div>
 
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" list="location-list">
-        <datalist id="location-list">
-            <?php foreach ($locations as $loc): ?>
-            <option value="<?= $loc->getId();?>"><?= $loc->getName(); ?></option>
-            <?php endforeach; ?>
-        </datalist>
+                <div class="form-group">  <label for="from-date">From Date:</label>
+                    <input type="date" class="form-control" id="from-date" name="from-date">
+                </div>
 
-        <br><br>
+                <div class="form-group">  <label for="to-date">To Date:</label>
+                    <input type="date" class="form-control" id="to-date" name="to-date">
+                </div>
 
-        <label for="data-type">Data Type:</label>
-        <select id="data-type" name="data-type">
-            <option value="values">Values</option>
-            <option value="average">Average</option>
-            <option value="min">Minimum</option>
-            <option value="max">Maximum</option>
-        </select>
-        <br><br>
+                <button type="button" class="btn btn-primary" id="applyFiltersButton">Apply Filters</button>  </form>
+        </div>
+    </div>
 
-        <label for="from-date">From Date:</label>
-        <input type="date" id="from-date" name="from-date">
+    <div class="card mt-1">
+        <div class="card-header">
+            <h2>Temperature</h2>
+        </div>
+        <div id="temperature_chart"></div>
+        <hr>
+    </div>
 
-        <label for="to-date">To Date:</label>
-        <input type="date" id="to-date" name="to-date">
+    <div class="card mt-1">
+        <div class="card-header">
+            <h2>Humidity</h2>
+        </div>
+        <div id="humidity_chart"></div>
+        <hr>
+    </div>
 
-        <br><br>
-        <input type="button" id="applyFiltersButton" value="Apply Filters">
-    </fieldset>
-</form>
+    <div class="card mt-1">
+        <div class="card-header">
+            <h2>Wind Speed</h2>
+        </div>
+        <div id="wind_speed_chart"></div>
+        <hr>
+    </div>
 
-<hr>
-
-<h2>Temperature</h2>
-<div id="temperature_chart" width="400" height="200"></div>
-
-<hr>
-
-<h2>Humidity</h2>
-<div id="humidity_chart"></div>
-
-<hr>
-
-<h2>Wind Speed</h2>
-<div id="wind_speed_chart"></div>
-
-<hr>
-
-<h2>Precipitation</h2>
-<div id="precipitation_chart"></div>
-
-<div id="test"></div>
+    <div class="card mt-1">
+        <div class="card-header">
+            <h2>Precipitation</h2>
+        </div>
+        <div id="precipitation_chart"></div>
+    </div>
+    <div id="test"></div>
+</div>
 
 <script src="/public/js/statsScript.js" type="module"></script>

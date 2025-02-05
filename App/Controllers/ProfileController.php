@@ -126,6 +126,8 @@ class ProfileController extends AControllerBase
         $profile = new Profile();
         $profile->setUser($user->getId());
         $profile->setDateCreated((new DateTime())->format('Y-m-d H:i:s'));
+        $new_file_location = ProfileController::$PICTURE_DIR."df_pf.jpg";
+        $profile->setProfilePic($new_file_location);
         $profile->save();
     }
 }
