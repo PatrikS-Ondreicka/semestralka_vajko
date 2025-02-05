@@ -5,15 +5,27 @@
 $location = $data['location'];
 ?>
 
-<form action="<?= $link->url("location.edit", ["location_id" => $location->getId()]) ?>" method="post" id="locationForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="<?= $location->getName() ?>" required><br><br>
+<form action="<?= $link->url("location.edit", ["location_id" => $location->getId()])?>" method="post" id="locationForm">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Edit Location</h5>  </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" value="<?= $location->getName()?>" required>
+            </div>
 
-    <label for="lat" class="form-label">Latitude</label>
-    <input type="number" id="lat" name="lat" class="form-control" step="0.0001" value="<?= $location->getLat(); ?>" required><br><br>
+            <div class="form-group">
+                <label for="lat">Latitude:</label>
+                <input type="number" id="lat" name="lat" class="form-control" step="0.0001" value="<?= $location->getLat();?>" required>
+            </div>
 
-    <label for="lon" class="form-label">Longitude</label>
-    <input type="number" id="lon" name="lon" class="form-control" step="0.0001" value="<?= $location->getLon(); ?>" required><br><br>
+            <div class="form-group">
+                <label for="lon">Longitude:</label>
+                <input type="number" id="lon" name="lon" class="form-control" step="0.0001" value="<?= $location->getLon();?>" required>
+            </div>
 
-    <input type="submit" name="submit" value="Edit Location">
+            <button type="submit" name="submit" class="btn btn-primary">Edit Location</button>
+        </div>
+    </div>
 </form>

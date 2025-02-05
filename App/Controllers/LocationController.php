@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\AControllerBase;
 use App\Core\DB\Connection;
+use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Models\Location;
 use App\Models\Data;
@@ -74,5 +75,23 @@ class LocationController extends AControllerBase
 
     public function map() {
         return $this->html();
+    }
+
+    public function data() {
+        $req = $this->request();
+        $location_id = $req->getValue("location_id");
+        $location = Location::getOne($location_id);
+        if ($location == null) {
+            return new RedirectResponse($this->url("location.error", ["message" => "Unable to find location"]));
+        }
+        $data = Data::getAll("`location` = ?", [$location_id]);
+        return $this->html(["weather_date" => $data, 'location' => $location]);
+    }
+
+    public function error()
+    {
+        $req = $this->request();
+        $message = $req->getValue('message');
+        return $this->html(["message" => $message]);
     }
 }
