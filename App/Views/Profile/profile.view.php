@@ -13,28 +13,27 @@ $profile = $data['profile'];
 session_start();
 ?>
 
-<div class="container profile-container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="profile-header d-flex align-items-center">
+<div class="card profile-container">
+        <div class="row">
+            <div class="profile-header col-md-5 col-12">
                 <img src="<?= $profile->getProfilePic(); ?>" alt="Profile Picture" class="profile-image">
                 <div>
                     <h2><?= $username ?></h2>
                     <p><strong>Description:</strong> <?= $profile->getDescription() ?></p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Account Created:</strong> <?= (new DateTime($profile->getDateCreated()))->format('Y-m-d H:i:s'); ?></p>
+            <div class="profile-content col-md-7 col-12">
+                <div>
+                    <p><strong>Account Created:</strong><br> <?= (new DateTime($profile->getDateCreated()))->format('Y-m-d H:i:s'); ?></p>
                 </div>
-                <div class="col-md-6">
+                <div>
+                    <a href="<?= $link->url("profile.profileData", ['user_id' => $user_id])?>" class=" i_button i_info"><i class="bi bi-eye-fill"></i>View</a>
                     <?php if ($user_id == $auth->getLoggedUserId()): ?>
-                        <a href="<?= $link->url("profile.editProfile", ['user_id' => $user_id])?>" class="btn btn-primary">Edit Profile</a>
+                        <a class="i_button i_restricted" href="<?= $link->url("profile.editProfile", ['user_id' => $user_id])?>"><i class="bi bi-pencil-square"></i>Edit</a>
                     <?php endif; ?>
                 </div>
             </div>
-            <a href="<?= $link->url("profile.profileData", ['user_id' => $user_id])?>">User data</a>
+
         </div>
-    </div>
 </div>
 

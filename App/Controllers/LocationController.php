@@ -71,4 +71,8 @@ class LocationController extends AControllerBase
 
         return $this->html(["location" => $location]);
     }
+
+    public function map() {
+        return $this->html();
+    }
 }

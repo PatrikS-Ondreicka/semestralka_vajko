@@ -57,7 +57,7 @@ use App\Models\User;
                     <ul class="navbar-nav ms-auto">
                         <?php if ($auth->isLogged()) :?>
                             <li class="nav-item">
-                                <a class="nav-link text-danger" href=<?= $logout_link ?>>Logout</a>
+                                <a class="nav-link text-danger" href=<?= $logout_link ?>><i class="bi bi-escape"></i>Logout</a>
                             </li>
                         <?php endif; ?>
                         <?php if (!$auth->isLogged()) :
@@ -74,15 +74,18 @@ use App\Models\User;
                         <?php if ($auth->isLogged()) :
                             $dataform_link = $link->url("data.dataform"); ?>
                             <li class="nav_item">
-                                <a class="nav-link" href=<?= $dataform_link ?>>Add data</a>
+                                <a class="nav-link" href=<?= $dataform_link ?>><i class="bi bi-plus-circle-fill"></i>Add data</a>
                             </li>
                         <?php endif; ?>
                             <li class="nav_item">
-                                <a class="nav-link" href=<?= $link->url("data.data") ?>>View data</a>
+                                <a class="nav-link" href=<?= $link->url("data.data") ?>><i class="bi bi-eye-fill"></i>View data</a>
                             </li>
                             <li class="nav_item">
-                                <a class="nav-link" href=<?= $link->url("data.statistics") ?>>Statistics</a>
+                                <a class="nav-link" href=<?= $link->url("data.statistics") ?>><i class="bi bi-bar-chart-fill"></i>Statistics</a>
                             </li>
+                        <li class="nav_item">
+                            <a class="nav-link" href=<?= $link->url("location.map") ?>><i class="bi bi-map-fill"></i>Map</a>
+                        </li>
                         <?php if ($auth->isLogged() && User::getOne($auth->getLoggedUserId())->getRole() != 0) :
                             $admin_loc_link = $link->url("adm.adminLocations");
                             $admin_data_link = $link->url("adm.adminData");

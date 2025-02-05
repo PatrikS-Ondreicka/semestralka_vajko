@@ -15,7 +15,7 @@ use App\Models\User;
 class FolderController extends AControllerBase
 {
 
-    public array $supported_colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"];
+    public array $supported_colors = ["#FF6666", "66FF66", "#6666FF", "#FFFF99", "#FF66FF", "#66FFFF"];
 
     /**
      * @inheritDoc

@@ -31,7 +31,7 @@ label
 {
     background-color: var(--neutral);
     border:1px solid var(--primary);
-    color:var(--neutral_2);
+    color:var(--secondary);
 }
 
 .form-control:focus
@@ -46,16 +46,11 @@ label
     background-color: var(--primary);
 }
 
-.wind_direction option:hover
-{
+.button-link {
+
 }
 
-.color-option {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    vertical-align: middle; /* Align square with text */
-    border: 1px solid #ccc; /* Add a border for better visibility */
+.wind_direction option:hover
+{
 }
 

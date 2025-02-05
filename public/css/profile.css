@@ -1,15 +1,21 @@
 .profile-container {
-    color: var(--primary);
+    padding:10px;
+    color: var(--secondary);
     background-color: var(--neutral_2);
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 30px;
 }
 
 .profile-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+.profile-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .profile-image {
@@ -26,12 +32,6 @@
 
 .profile-info p {
     margin-bottom: 10px;
-}
-
-/* Optional: Hover effects */
-.profile-image:hover {
-    transform: scale(1.05);
-    transition: transform 0.2s ease-in-out;
 }
 
 .color-option {
@@ -62,4 +62,35 @@
 
 #profile_link_content:hover {
     background-color: var(--neutral);
+}
+
+.folder {
+    border: 1px solid var(--primary); /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px; /* Space between folders */
+    overflow: hidden; /* Prevents content from overflowing rounded corners */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.folder > a {
+    text-decoration: none;
+}
+
+.folder:hover {
+    border-color: #999;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
+    background-color: #f8f8f8;
+}
+
+.folder_header {
+    background-color: var(--neutral_2);
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--tertiary);
+    display: flex;
+    align-items: center;
+}
+
+.folder_content {
+    padding: 10px;
 }

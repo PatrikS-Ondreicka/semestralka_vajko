@@ -13,17 +13,19 @@ $folder = $data['folder'];
 
 ?>
 
-    <div class="row">
-        <div class="col-12 mb-3">
-            <h2><?= $folder->getName() ?></h2>
-            <p><?= $folder->getDescription() ?></p>
+        <div class="col-12 card mb-3">
+            <div class="card-header">
+                <h2><?= $folder->getName() ?></h2>
+                <p><?= $folder->getDescription() ?></p>
+            </div>
+            <div class="card-body">
             <?php if ($auth->getLoggedUserId() == $folder->getOwner()): ?>
-                <a href="<?= $link->url('folder.folderEdit', ['folder' => $folder->getId()])?>" class="btn btn-primary">Edit Folder</a>
-                <a href="<?= $link->url('folder.delete', ['folder' => $folder->getId()])?>" class="btn btn-danger">Delete Folder</a>
+                <a href="<?= $link->url('folder.folderEdit', ['folder' => $folder->getId()])?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i>Edit Folder</a>
+                <a href="<?= $link->url('folder.delete', ['folder' => $folder->getId()])?>" class="btn btn-danger"><i class="bi bi-trash3-fill"></i>Delete Folder</a>
             <?php endif; ?>
-                <a href="<?= $link->url('folder.exportAsCSV', ['folder' => $folder->getId()])?>" class="btn btn-light">Export as CSV</a>
+                <a href="<?= $link->url('folder.exportAsCSV', ['folder' => $folder->getId()])?>" class="btn btn-light"><i class="bi bi-arrow-bar-down"></i>Export as CSV</a>
+            </div>
         </div>
-    </div>
 
 <?php foreach  ($user_data as $weather_data):?>
     <div class="data_grid container col-md-9 col-sm-12">
@@ -78,9 +80,9 @@ $folder = $data['folder'];
             </div>
             <div>
                 <?php if ($auth->getLoggedUserId() == $folder->getOwner()): ?>
-                <a href="<?= $link->url('folder.remove', ['folder' => $folder->getId(), 'data' => $weather_data->getId()]) ?>"  class="btn">Remove</a>
+                <a href="<?= $link->url('folder.remove', ['folder' => $folder->getId(), 'data' => $weather_data->getId()]) ?>"  class="btn"><i class="bi bi-folder-minus"></i>Remove</a>
                 <?php endif ?>
-                <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Detail</a>
+                <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn"><i class="bi bi-eye-fill"></i>Detail</a>
             </div>
         </div>
     </div>

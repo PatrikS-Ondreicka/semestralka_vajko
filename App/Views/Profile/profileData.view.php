@@ -33,15 +33,15 @@ $errors = $data['errors'];
                     <div class="mb-3">
                         <label for="color" class="form-label">Color:</label>
                         <select class="form-select" id="color" name="color">
-                            <option value="#FF0000" style="background-color: #FF0000;"></option>
-                            <option value="#00FF00" style="background-color: #00FF00;"></option>
-                            <option value="#0000FF" style="background-color: #0000FF;"></option>
-                            <option value="#FFFF00" style="background-color: #FFFF00;"></option>
-                            <option value="#FF00FF" style="background-color: #FF00FF;"></option>
-                            <option value="#00FFFF" style="background-color: #00FFFF;"></option>
+                            <option value="#FF0000" style="background-color: #FF6666;"></option>
+                            <option value="#00FF00" style="background-color: #66FF66;"></option>
+                            <option value="#0000FF" style="background-color: #6666FF;"></option>
+                            <option value="#FFFF00" style="background-color: #FFFF99;"></option>
+                            <option value="#FF00FF" style="background-color: #FF66FF;"></option>
+                            <option value="#00FFFF" style="background-color: #66FFFF;"></option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Create Folder</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i>Create Folder</button>
                 </form>
             </div>
             <div class="card-footer">
@@ -56,12 +56,15 @@ $errors = $data['errors'];
     <div class="mt-2">
         <?php foreach  ($folders as $folder):?>
             <div class="col-md-4 mb-4">
-                <div class="card shadow-sm" style="background-color: <?= $folder->getColor(); ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $folder->getName(); ?></h5>
-                        <p class="card-text"><?= $folder->getDescription(); ?></p>
-                        <a href="<?= $link->url("profile.profileFolder", ['folder' => $folder->getId()]) ?>" class="btn btn-primary">View</a>
-                    </div>
+                <div class="folder shadow-sm" style="background-color: <?= $folder->getColor(); ?>">
+                    <a href="<?= $link->url("profile.profileFolder", ['folder' => $folder->getId()]) ?>">
+                        <div class="folder_header">
+                            <h5 class="card-title"><?= $folder->getName(); ?></h5>
+                        </div>
+                        <div class="folder_content">
+                            <p class="card-text"><?= $folder->getDescription(); ?></p>
+                        </div>
+                    </a>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -121,10 +124,10 @@ $errors = $data['errors'];
                     </div>
                 </div>
                 <div>
-                    <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Detail</a>
+                    <a href="<?= $link->url('data.detail', ['dataId' => $weather_data->getId()]) ?>"  class="btn"><i class="bi bi-eye-fill"></i>Detail</a>
                     <?php if ($auth->getLoggedUserId() == $weather_data->getUser()): ?>
-                    <a href="<?= $link->url('data.deleteData', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Delete</a>
-                    <a href="<?= $link->url('data.dataedit', ['dataId' => $weather_data->getId()]) ?>"  class="btn">Edit</a>
+                    <a href="<?= $link->url('data.deleteData', ['dataId' => $weather_data->getId()]) ?>"  class="btn"><i class="bi bi-trash3-fill"></i>Delete</a>
+                    <a href="<?= $link->url('data.dataedit', ['dataId' => $weather_data->getId()]) ?>"  class="btn"><i class="bi bi-pencil-fill"></i>Edit</a>
                     <?php endif; ?>
                 </div>
                 <div>
@@ -138,7 +141,7 @@ $errors = $data['errors'];
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
-                        <button type="submit" class="btn btn-primary btn-sm ms-2">Add</button>
+                        <button type="submit" class="btn btn-primary btn-sm ms-2"><i class="bi bi-folder-plus"></i></button>
                     </form>
                     <?php endif; ?>
                 </div>

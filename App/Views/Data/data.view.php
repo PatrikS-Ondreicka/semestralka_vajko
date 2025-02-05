@@ -14,7 +14,8 @@
 </div>
 <?php foreach  ($weatherData as $data):?>
 <div class="data_grid container col-md-9 col-sm-12">
-    <div class="data_block container">
+    <div class="data_block data_block_clickable container">
+        <a href="<?= $link->url('data.detail', ['dataId' => $data->getId()]) ?>">
         <div class="data_block_header">
             <div class="user_data_block">
                 <div class="value_icon user_icon_bg"></div>
@@ -68,10 +69,8 @@
                     </span>
                 </div>
             </div>
-            <div>
-                <a href="<?= $link->url('data.detail', ['dataId' => $data->getId()]) ?>"  class="btn">Detail</a>
-            </div>
         </div>
+    </a>
     </div>
 </div>
 <?php endforeach;?>

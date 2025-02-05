@@ -186,6 +186,9 @@ class DataController extends AControllerBase
         $id = (int) $req->getValue('dataId');
 
         $weatherData = Data::getOne($id);
+        if ($weatherData == null) {
+            return new RedirectResponse($this->url("data.error", ['message' => "Unable to fetch data with id ".$id]));
+        }
         return $this->html(['weatherData' => $weatherData]);
     }
 

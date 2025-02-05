@@ -27,14 +27,16 @@ class DataChart {
             xaxis: {
                 title: 'Date',
                 type: 'date',
-                tickformat: '%Y-%m-%d', // Adjust date format as needed
+                tickformat: '%Y-%m-%d',
             },
             yaxis: {
                 title: this.textLabel,
             },
+            plot_bgcolor: '#ADD7F6',
+            paper_bgcolor: '#ADD7F6',
         };
 
-        this.chart = Plotly.newPlot(this.chartId, [trace], layout);
+        this.chart = Plotly.newPlot(this.chartId, [trace], layout,{ responsive: true});
     }
 }
 

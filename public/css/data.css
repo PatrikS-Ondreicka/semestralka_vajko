@@ -11,12 +11,22 @@
     padding: 0.5em;
 }
 
+.data_block a
+{
+    text-decoration: none;
+}
+
+.data_block_clickable:hover
+{
+    background-color: var(--neutral);
+    box-shadow: var(--primary) 0px 1px 2px 0px;
+}
+
 .data_block_header
 {
     display: flex;
     justify-content: space-between;
 }
-
 
 .user_values
 {
@@ -31,12 +41,12 @@
 
 .value_block
 {
-    border-right:1px solid var(--neutral);
+    border-right:1px solid var(--secondary);
 }
 
 .value_block_value
 {
-    color: var(--neutral);
+    color: var(--secondary);
 }
 
 .date_data

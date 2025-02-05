@@ -1,18 +1,21 @@
 :root
 {
-    --primary: #2D7084;
-    --secondary: #869398;
-    --tertiary: #8E8FA6;
+    --primary: #3B28CC;
+    --secondary: #2667FF;
+    --tertiary: #3F8EFC;
     --error: #FF5449;
-    --neutral: #909191;
-    --neutral_2: #C0C4C7;
+    --neutral: #87BFFF;
+    --neutral_2: #ADD7F6;
     --light_text: #E6ECF0;
+    --info:#93D962;
+    --restricted:#FFFF82;
+    --danger:#E65F5C;
 }
 
 body
 {
     background-color:var(--neutral);
-    color: #E6ECF0;
+    color: var(--secondary);
 }
 
 .card
@@ -32,7 +35,11 @@ body
 
 .menu-bar
 {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     background-color:var(--neutral_2);
+    box-shadow: var(--primary) 0px 1px 2px 0px;
 }
 
 .local_weather_data_pair
@@ -107,6 +114,42 @@ body
     width: 10em;
     height: 10em;
     border-radius:50%;
+}
+
+
+.i_button {
+    text-decoration:none;
+    display: inline-block;
+    background-color: var(--tertiary);
+    border-radius: 10%;
+    padding: 0.2em;
+    font-size: 20px;
+    border: 1px solid transparent;
+}
+
+.i_button:hover {
+    background-color: var(--secondary);
+}
+
+.i_info {
+    color: var(--info);
+}
+
+.i_restricted {
+    color: var(--restricted);
+}
+
+.i_danger {
+    color: var(--danger);
+}
+
+.i_button:hover {
+    color: var(--primary);
+}
+
+.card {
+    background-color: var(--neutral_2);
+    box-shadow: var(--primary) 0px 1px 2px 0px;
 }
 
 .error_header
