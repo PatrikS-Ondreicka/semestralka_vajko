@@ -44,3 +44,11 @@ $errors = $data['errors'];
         </div>
     </div>
 </div>
+
+<script>
+    let colorSelect = document.getElementById("color");
+    colorSelect.style.backgroundColor = colorSelect.value;
+    colorSelect.onchange = function () {
+        colorSelect.style.backgroundColor = colorSelect.value;
+    }
+</script>

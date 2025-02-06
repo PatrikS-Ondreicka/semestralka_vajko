@@ -2,10 +2,33 @@
 
 }
 
+.admin_link {
+    color: var(--danger);
+    font-weight: bolder;
+}
+
 .admin_table > tbody > tr > td {
     background-color: var(--neutral_2);
+    border-bottom : 1px solid var(--danger);
 }
 
 .admin_table > thead > tr > th {
+    background-color: var(--danger);
+    color: var(--neutral_2);
+}
+
+.locations_table > tbody > tr > td {
+    background-color: var(--neutral_2);
+    border-bottom : 1px solid var(--primary);
+}
+
+.locations_table > thead > tr > th {
     background-color: var(--primary);
+    color: var(--neutral_2);
+}
+
+td.buttons_col {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }

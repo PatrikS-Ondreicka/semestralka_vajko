@@ -9,7 +9,7 @@ $location = $data['location'];
 
 <h3>Data in location: <?= $location->getName() ?></h3>
 
-<table class="table admin_table">
+<table class="table locations_table">
     <thead>
     <tr>
         <th>ID</th>
@@ -31,8 +31,8 @@ $location = $data['location'];
         <td><?= $datum->getWindSpeed(); ?></td>
         <td><?= $datum->getWindDirection(); ?></td>
         <td><?= $datum->getPrecipitation(); ?></td>
-        <td>
-            <a href="<?= $link->url("data.detail", ["dataId" => $datum->getId()])?>" class="btn btn-primary btn-sm">View</a>
+        <td class="buttons_col">
+            <a href="<?= $link->url("data.detail", ["dataId" => $datum->getId()])?>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i>View</a>
         </td>
     <tr>
         <?php endforeach; ?>

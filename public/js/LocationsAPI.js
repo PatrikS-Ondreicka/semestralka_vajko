@@ -23,6 +23,15 @@ class LocationAPI extends DataService {
             null,
             []);
     }
+
+    async getLocationLike(name) {
+        return await this.sendRequest(
+            "getLocationLike" + this.toRequestArg("locName", name),
+            "POST",
+            200,
+            null,
+            []);
+    }
 }
 
 export {LocationAPI};

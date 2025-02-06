@@ -6,6 +6,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 session_start();
 use App\Models\User;
 use App\Models\InFolder;
+use App\Models\Folder;
 
 $user_id = $data['user_id'];
 $user_data = $data['user_data'];
@@ -33,12 +34,12 @@ $errors = $data['errors'];
                     <div class="mb-3">
                         <label for="color" class="form-label">Color:</label>
                         <select class="form-select" id="color" name="color">
-                            <option value="#FF0000" style="background-color: #FF6666;"></option>
-                            <option value="#00FF00" style="background-color: #66FF66;"></option>
-                            <option value="#0000FF" style="background-color: #6666FF;"></option>
-                            <option value="#FFFF00" style="background-color: #FFFF99;"></option>
-                            <option value="#FF00FF" style="background-color: #FF66FF;"></option>
-                            <option value="#00FFFF" style="background-color: #66FFFF;"></option>
+                            <option value="#FF6666" style="background-color: #FF6666;"></option>
+                            <option value="#66FF66" style="background-color: #66FF66;"></option>
+                            <option value="#6666FF" style="background-color: #6666FF;"></option>
+                            <option value="#FFFF99" style="background-color: #FFFF99;"></option>
+                            <option value="#FF66FF" style="background-color: #FF66FF;"></option>
+                            <option value="#66FFFF" style="background-color: #66FFFF;"></option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i>Create Folder</button>
@@ -131,7 +132,8 @@ $errors = $data['errors'];
                     <?php endif; ?>
                 </div>
                 <div>
-                    <?php if ($auth->getLoggedUserId() == $weather_data->getUser()): ?>
+                    <?php if ($auth->getLoggedUserId() == $weather_data->getUser() &&
+                        count(Folder::getAll("owner = ?", [$auth->getLoggedUserId()])) > count(InFolder::getAll("data = ?", [$weather_data->getId()]))): ?>
                     <form action="<?= $link->url("folder.place", ['data_id' => $weather_data->getId()])?>" method="post" class="d-flex align-items-center">
                         <label for="folder" class="form-label me-2 mb-0">Folder:</label>
                         <select class="form-select form-select-sm" id="folder" name="folder">
@@ -149,3 +151,11 @@ $errors = $data['errors'];
         </div>
     <?php endforeach; ?>
 </div>
+
+<script>
+    let colorSelect = document.getElementById("color");
+
+    colorSelect.onchange = function () {
+        colorSelect.style.backgroundColor = colorSelect.value;
+    }
+</script>

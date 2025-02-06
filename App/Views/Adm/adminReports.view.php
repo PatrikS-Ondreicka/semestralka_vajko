@@ -26,9 +26,9 @@ $usernames = $data["usernames"];
         <td><?= $report->getData(); ?></td>
         <td><?= $usernames[$report->getUser()]; ?></td>
         <td><?= $types[$report->getReportsType()]; ?></td>
-        <td>
-            <a href="<?= $link->url("data.detail", ["dataId" => $report->getData()]) ?>" class="btn btn-primary btn-sm">View</a>
-            <a href="<?= $link->url("report.delete", ["report_id" => $report->getId()]) ?>" class="btn btn-danger btn-sm">Delete</a>
+        <td class="buttons_col">
+            <a href="<?= $link->url("data.detail", ["dataId" => $report->getData()]) ?>" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i>View</a>
+            <a href="<?= $link->url("report.delete", ["report_id" => $report->getId()]) ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill"></i>Delete</a>
         </td>
     <tr>
     <?php endforeach; ?>

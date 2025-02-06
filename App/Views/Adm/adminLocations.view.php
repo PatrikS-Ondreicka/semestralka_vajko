@@ -24,9 +24,9 @@ $locations = $data["locations"];
             <td><?= $location->getLon(); ?></td>
             <td><?= $location->getLat(); ?></td>
             <td><?= $location->getName(); ?></td>
-            <td>
-                <a href="<?= $link->url("location.edit", ["location_id" => $location->getId()])?>" class="btn btn-primary btn-sm">Edit</a>
-                <a href="<?= $link->url("location.delete", ["location_id" => $location->getId()])?>" class="btn btn-danger btn-sm">Delete</a>
+            <td class="buttons_col">
+                <a href="<?= $link->url("location.edit", ["location_id" => $location->getId()])?>" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i>Edit</a>
+                <a href="<?= $link->url("location.delete", ["location_id" => $location->getId()])?>" class="btn btn-danger btn-sm"><i class="bi bi-trash3-fill"></i>Delete</a>
             </td>
         <tr>
         <?php endforeach; ?>

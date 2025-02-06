@@ -91,13 +91,13 @@ use App\Models\User;
                             $admin_data_link = $link->url("adm.adminData");
                             $admin_reports_link = $link->url("adm.adminReports"); ?>
                             <li class="nav_item">
-                                <a class="nav-link" href=<?= $admin_loc_link ?>>Admin Locations</a>
+                                <a class="nav-link admin_link" href=<?= $admin_loc_link ?>>Admin Locations</a>
                             </li>
                             <li class="nav_item">
-                                <a class="nav-link" href=<?= $admin_data_link ?>>Admin Data</a>
+                                <a class="nav-link admin_link" href=<?= $admin_data_link ?>>Admin Data</a>
                             </li>
                             <li class="nav_item">
-                                <a class="nav-link" href=<?= $admin_reports_link ?>>Admin Reports</a>
+                                <a class="nav-link admin_link" href=<?= $admin_reports_link ?>>Admin Reports</a>
                             </li>
                         <?php endif; ?>
                     </ul>

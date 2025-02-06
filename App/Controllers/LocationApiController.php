@@ -30,4 +30,11 @@ class LocationApiController extends AControllerBase
         $locations = Location::getAll("`name` = ?" ,[$loc_name]);
         return $this->json($locations);
     }
+
+    public function getLocationLike() {
+        $req = $this->request();
+        $loc_name = $req->getValue('locName');
+        $locations = Location::getAll("`name` LIKE ?" ,[$loc_name.'%']);
+        return $this->json($locations);
+    }
 }
